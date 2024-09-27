@@ -1,0 +1,19 @@
+Adding a single event listener to a common ancestor element, such as your ticTacToeContainer, and using it to handle events for multiple child elements is known as event delegation.
+
+Here's a breakdown of the process:
+
+Single Event Listener: Instead of attaching individual event listeners to each child element, you attach a single event listener to a common parent or ancestor element (in this case, ticTacToeContainer).
+
+Event Bubbling: When an event, such as a click, occurs on a child element, the event propagates or bubbles up through the DOM hierarchy. This is the natural behavior of events in the browser.
+
+Event Handling at Common Ancestor: The single event listener on the common ancestor (ticTacToeContainer) listens for events at the bubbling phase. When a child element triggers the event, the ancestor's event listener is called.
+
+Checking the Target: In the event handler, you can inspect the event.target property to identify the specific child element that was clicked.
+
+Efficient Handling: This approach is more efficient, especially when dealing with a large number of elements, as it eliminates the need to attach individual event listeners to each child. It simplifies the code and can improve performance.
+
+In your TicTacToe implementation, the ticTacToeContainer_ClickListener function is an example of event delegation. It adds a single click event listener to ticTacToeContainer and then uses the event object to determine which specific cell was clicked.
+
+
+
+

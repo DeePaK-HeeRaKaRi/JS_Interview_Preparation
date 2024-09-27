@@ -1,0 +1,35 @@
+.chess_board{
+    display: flex;
+    flex-direction: column;
+    height:700px;
+    width:700px;
+    /* border:1px solid black */
+}
+
+.row{
+    height:100px;
+    width:100%;
+    /* border:1px solid blue; */
+    display: flex;
+
+}
+.cell{
+    display: flex;
+    flex-direction: row;
+    width:20%;
+    /* height:100%; */
+    border:1px solid orange
+}
+.black_cell{
+    background-color: rgb(19, 4, 4);
+
+}
+.cell{
+    cursor: pointer;
+}
+.red_cell{
+    background-color: tomato;
+}
+.source_cell{
+    background-color: rgb(84, 84, 178);
+}

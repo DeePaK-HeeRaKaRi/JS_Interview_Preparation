@@ -1,0 +1,22 @@
+let today=new Date()
+// console.log(today)
+let otherdate=new Date('8-4-2003 12:59:50')
+// otherdate=new Date('June 13 1001')
+// otherdate=new Date('09/16/1989')
+console.log(otherdate)
+let a;
+a=otherdate.getDate()
+a=otherdate.getDay()
+// 0 1 2 3 4 5 6 -> mon tue wed thu fri sat
+a=otherdate.getMinutes()
+a=otherdate.getHours()
+a=otherdate.getFullYear()
+a=otherdate.getMonth()
+//0 1 2 3 4
+console.log(a)
+otherdate.setDate(19)
+otherdate.setMonth(0)
+console.log(otherdate)
+console.log(today.getDate()+' '+today.getMonth()+' '+today.getFullYear())
+let tostr=String(today)
+console.log(tostr.substring(4,15))

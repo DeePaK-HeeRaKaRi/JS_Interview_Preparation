@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- PRELOADING STARTS -->
+    <!-- rel=relation -->
+    <link rel="preload" as="script" href="script2.js">
+    <link rel="preload" href="style2.css" as="style">
+    <!-- PRELOADING ENDS -->
+
+    <!-- PREFETCH STARTS -->
+    <!-- in index3.html we have script3.js -->
+    <link rel="prefetch" href="index3.html">  
+    <link rel="prefetch"  as="script" href="script3.js">
+    <!-- PREFETCH ENDS -->
+
+    <!-- PEECONNECT STARTS -->
+    <link rel="preconnect" href="https://api.my-app.com"/>
+    <!-- PRECONNECT ENDS -->
+
+    <!-- USING STYLES -->
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <h1>Preload Prefetch Preconnect</h1>
+    <a href="index3.html">indexx3</a>
+</body>
+<script src="./script1.js"></script>
+<script src="./script2.js"></script>
+</html>

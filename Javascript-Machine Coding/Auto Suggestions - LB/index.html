@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <p>Create an Auto Suggestion Box in Vanilla JS
+    Create a suggestion area bottom to the input box that shows the suggestion list.
+    <br/>
+    The list is visible when the input box is in focus or when user types, it hides when the input box is blurred[out of box]
+    <br/>
+    getSuggestions(text); method will act as mock server and will return random text based on the inputs with 0 - 200
+    millisceond latency and may fail.
+    <br/>
+    if a suggestion is clicked, populate the input box with its value and bring input box in focus</p>
+
+    <main>
+        <input type='search' id = 'search' placeholder="Enter your query">
+        <div id="suggestion-area"></div>
+    </main>
+    <script type="module" src="./index.js"></script>
+</body>
+</html>

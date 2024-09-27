@@ -1,0 +1,84 @@
+
+.container{
+    width:100%;
+    height:80vh;
+    /* border: 1px solid black; */
+    display: flex;
+}
+.leftPanel{
+    flex:15%;
+    border-right-style:solid;
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.rightPanel{
+    flex:70%;
+    display: flex;
+    flex-direction: column;
+}
+.leftPanel .filter{
+    position: relative;
+    width:100%;
+    height:10%;
+    border: 1px solid black;
+    
+}
+.leftPanel .price{
+    position: relative;
+    width:100%;
+    height:auto;
+    border: 1px solid black;
+}
+
+.leftPanel .brand{
+    position: relative;
+    width:100%;
+    height:20%;
+    border: 1px solid black;
+}
+.leftPanel .color{
+    position: relative;
+    width:100%;
+    height:40%;
+    border: 1px solid black;
+}
+
+.rightPanel .header{
+    position: relative;
+    width: 100%;
+    height: 13%;
+    /* border: 1px solid rgb(243, 21, 21); */
+}
+.rightPanel .productsList{
+    position: relative;
+    width: 100%;
+    height: 70%;
+    /* border: 1px solid rgb(243, 21, 21); */
+}
+.productsList{
+    display:grid;
+    gap:10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* background-color: aqua; */
+    padding:0px
+}
+.items{
+    /* border: 1px solid black; */
+    padding: 10px;
+
+}
+.productImage img{
+    width:50%;
+    height:50%
+}
+.header{
+    display: flex;
+    width:70%;
+    justify-content: space-between;
+}
+.header p{
+    cursor: pointer;
+}
+@mixins(max-width:768px)
+ 

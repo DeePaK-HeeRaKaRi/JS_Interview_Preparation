@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #34495e;
+    color: #fff;
+}
+
+h1 {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 2.5rem;
+}
+
+.accordion {
+    /* width: 90%; */
+    /* border: 1px solid black; */
+    /* margin: auto auto 15rem auto; */
+    margin: auto;
+    max-width: 1000px;
+}
+
+.accordion-item {
+    display:flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    color: #111;
+    margin: 1rem 0 1rem 0;
+    border-radius: 0.5rem;
+    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.25);
+}
+
+.accordion-item-header {
+    padding: 0.5rem 3rem 0.5rem 1rem;
+    min-height: 3.5rem;
+    line-height: 1.25rem;
+    /* if header que exceeds */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Pseudo ele and pseudo classes */
+.accordion-item-header::after {
+    /* CSS Entities */
+    /* content: "+"; */
+    /* content : "\002B";   */
+    content: "\25BE";
+    font-size: 2rem;
+    position: absolute;
+    right: 1rem;
+    transition: transform 0.2s linear;
+}
+
+.accordion-item-header.active::after {
+    /* content: "\2212" ; */
+    transform: rotate(-180deg);
+}
+
+.accordion-item-body {
+    /* display: none; */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.accordion-item-body-content {
+    padding: 1.5rem;
+    line-height: 1.5rem;
+    /* border-top: 3px solid #34495e; */
+    border-top: 1px solid;
+    /* border-image: linear-gradient(to right, #008f68,#fae) 1; */
+    border-image: linear-gradient(to right, transparent, #71d1b8, transparent) 1;
+}
+
+/* if accordion item header is active than display as block */
+
+/* .accordion-item-header.active + .accordion-item-body {
+    display: block;
+} */
+
+/* We cannot relay on max-height as well */
+/* 
+.accordion-item-header.active + .accordion-item-body {
+
+    max-height: 1200px; 
+} */
+
+@media(max-width:767px) {
+    html {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,47 @@
+.container {
+    border: 1px solid rgb(228, 209, 209);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+input {
+    width: 20rem;
+    font-size: 1.5rem;
+}
+
+.indicators {
+    width: 20rem;
+    border: 1px solid gray;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem auto 1rem;
+    font-size: 1rem;
+    color: lightgrey
+}
+
+.inputBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.indicators .true {
+    color: green;
+}
+
+.progress-container {
+    width: 20rem;
+    border: 1px solid lightblue;
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    width: 50%;
+    transform: all 0.25s ease-in-out;
+    height: 100%;
+}

@@ -1,0 +1,53 @@
+.text-bold {
+    font-weight: bold;
+}
+
+.main-comment {
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    margin: 10px 10px;
+}
+
+
+.sub-comments {
+    margin-left: 2rem;
+}
+
+#commentContainer>.comment:first-child>.main-comment:first-child {
+    background-color: azure;
+}
+
+
+p {
+    margin: 0.25rem 0;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+.btn.btn-primary {
+    padding: 10px 16px;
+    background-color: cyan;
+    border: 1px solid grey;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn.btn-primary.small {
+    padding: 4px 6px;
+}
+
+.comment-text[contenteditable='true'] {
+    outline: 1px solid #c91616;
+    box-shadow: 0 4px 10px rgba(216, 92, 92, 0.05);
+}
+
+#commentContainer>.comment:first-child>.main-comment:first-child {
+    background-color: azure;
+}

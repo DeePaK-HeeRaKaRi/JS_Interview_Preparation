@@ -1,0 +1,17 @@
+export const searchList = [
+  "deepak",
+  "app",
+  "auth",
+  "token",
+  "optimize",
+  "two factor",
+  "authentication",
+  "security patterns",
+  "teams",
+  "microsoft teams",
+  "auth-1",
+  "auth-2",
+  "auth-3",
+  "auth-4",
+  "auth-5",
+];

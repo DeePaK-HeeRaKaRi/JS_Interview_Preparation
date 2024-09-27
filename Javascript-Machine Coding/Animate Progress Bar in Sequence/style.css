@@ -1,0 +1,11 @@
+.ProgressBar{
+    height:10px;
+    width:0;
+    /* background: rgb(246, 186, 186); */
+    /* add below transistion dynamically */
+    /* transition: width 2s ease;   */
+    margin:10px 0;
+}
+.fullWidth{
+    width:100%
+}

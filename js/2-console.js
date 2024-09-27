@@ -1,0 +1,12 @@
+console.time('Starts Time')
+console.log("Hello")
+console.timeEnd('Starts Time')
+console.time('Starts Time')
+console.log([1,2,"deepsk",5.5])
+console.log({deepak:25,company:'mindtree'})
+console.table({deepak:25,company:'mindtree'})
+console.warn('This Is A Warning')
+
+console.timeEnd('Starts Time')
+console.error('This is an Error')
+// console.clear()

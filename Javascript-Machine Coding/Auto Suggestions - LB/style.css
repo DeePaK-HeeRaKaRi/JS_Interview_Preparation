@@ -1,0 +1,28 @@
+main{
+    width: 500px;
+    margin: 10px auto 0 auto; /* Center */
+}
+#suggestion-area{
+    border: 1px solid red;
+    margin-top: 10px;
+    min-height: 100px;
+    padding: 5px;
+    /* overflow-y: scroll; */
+    display: none;  /* On focus we will show the suggestions */
+}
+#search{
+    padding: 10px;
+    width: 100%;
+}
+ 
+.listItems {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-bottom: 1px solid white
+}
+
+.listItemactive {
+    background-color: #d4cdcd;
+    color: black
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Generator Functions</h3>
+    <p>In JavaScript, a generator function is a special type of function that allows you to control the flow of execution and
+    produce a series of values one at a time. Generator functions are defined using the function* syntax, where an asterisk
+    (*) is placed after the function keyword. Here's an example of a generator function:</p>
+    
+    <h4>-------------------------</h4>
+    <p>In the above code, myGenerator is a generator function that yields three values: 1, 2, and 3. The yield keyword is used
+    to yield a value from the generator and pause its execution until the next value is requested.
+    
+    To use a generator, you create an iterator by calling the generator function. This iterator can be used to iterate over
+    the values produced by the generator. Here's how you can use the myGenerator generator:</p>
+
+    <h4>-------------------------</h4>
+    <p>Each call to iterator.next() returns an object with two properties:
+    
+    value: The value yielded by the generator.
+    done: A boolean indicating whether the generator has finished producing values (true when it's done).
+    You can use a for...of loop to simplify the iteration process:</p>
+</body>
+</html>
