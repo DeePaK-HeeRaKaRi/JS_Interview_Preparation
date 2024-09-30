@@ -55,52 +55,72 @@ const mapLimit=((arr,limit,fn)=>{
     return mapLimitOutput    
 })
 
-// const mapLimit = (arr,limit,fn)=>{
-//     const result=new Promise((resolve,reject)=>{
-//         let choppedArray = arr.chop(limit)
-//         let choppResult = []
-//         let batches = 0
-//         const final = choppedArray.reduce((prev,cur)=>{
-//             return prev
-//             .then(()=>{
-//                const subArrayResult = new Promise((resolve,reject) => {
-//                 let completed = 0
-//                 let curChoppedResult = []
-//                 cur.forEach((val) => {
-//                     fn(val,(err,resp) => {
-//                         if(err){
-//                             reject(`Error at ${val}`)
-//                         }else{
-//                             completed+=1
-//                             curChoppedResult.push(resp)
-//                             if(completed >= cur.length) {
-//                                 console.log(`Batches > ${batches}`);
-//                                 choppResult.push(curChoppedResult)
-//                                 batches+=1
-//                                 resolve(choppResult)
-//                             }
-//                         }
-//                     })
-//                 })
-//                })
-//                return subArrayResult
-//             })
-            
-//         },Promise.resolve([]))
-//         final
-//         .then((res) => {
-//             resolve(res)
-//         })
-//         .catch((e) => {
-//             reject(e)
-//         })
-//     })
-//     return result
-// }
-const arr=[1,2,3,4,5,6,7,8]
+const mapLimit_with_Cache = (arr, limit, fn) => {
+    const cache = {}; // Initialize the cache object
+
+    const mapLimitOutput = new Promise((resolve, reject) => {
+        let choppedArr = arr.chop(limit);
+        console.log('choppedArr', choppedArr);
+        let batches = 0;
+        let chopp = [];
+
+        const final = choppedArr.reduce((prev, cur) => {
+            return prev.then(() => {
+                const subArrayResult = new Promise((resolve, reject) => {
+                    const results = [];
+                    let taskCompleted = 0;
+
+                    cur.forEach((e) => {
+                        if (cache[e]) {
+                            // If the result is cached, use it
+                            console.log(`Using cached result for ${e}`);
+                            results.push(cache[e]);
+                            taskCompleted++;
+                            if (taskCompleted >= cur.length) {
+                                chopp.push(results);
+                                resolve(chopp);
+                            }
+                        } else {
+                            // If not cached, process with the function
+                            fn(e, (error, resp) => {
+                                if (error) {
+                                    reject(`Failed at ${e}`);
+                                } else {
+                                    taskCompleted++;
+                                    results.push(resp);
+                                    cache[e] = resp; // Store result in cache
+                                    if (taskCompleted >= cur.length) {
+                                        console.log('batches', batches++);
+                                        chopp.push(results);
+                                        resolve(chopp);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+                return subArrayResult;
+            });
+        }, Promise.resolve([]));
+
+        final
+            .then((result) => {
+                resolve(result);
+            })
+            .catch((e) => {
+                reject(e);
+            });
+    });
+
+    return mapLimitOutput;
+};
+
+// const arr=[1,2,3,4,5,6,7,8]
+const arr = [1, 2, 3, 4, 5, 6, 7, 8];
 // console.log(arr.chop(3))
 let limit=3
-const numPromise=mapLimit(arr,limit,function(num,callback){
+// const numPromise=mapLimit(arr,limit,function(num,callback){
+const numPromise=mapLimit_with_Cache(arr,limit,function(num,callback){
     setTimeout(()=>{
         num=num*2
         console.log(num)
