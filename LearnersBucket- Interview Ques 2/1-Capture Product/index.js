@@ -4,7 +4,7 @@
 // console.log(dimensions) //here we will get top right left bottom
 
 const checkEleInViewPort = (element) => {
-    const getDimensions = element.getBoundingClientRect();
+    const getDimensions = element.getBoundingClientRect(); // retrieves the size and position of the given DOM element relative to the viewport.
     // now detect element top>=0 and left>=0 and height<=vh and width<=vw
     const elementVW = window.innerWidth || document.documentElement.clientWidth
     const elementVH = window.innerHeight || document.documentElement.clientHeight;

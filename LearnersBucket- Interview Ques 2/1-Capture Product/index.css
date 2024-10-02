@@ -1,8 +1,11 @@
 .wrapper {
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .blocks {
