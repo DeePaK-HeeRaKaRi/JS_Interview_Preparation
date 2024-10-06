@@ -1,0 +1,64 @@
+
+.memory-game-container{
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.memory-game-elements-container {
+    height: 150px;
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(100px,1fr));
+    gap: 10px;
+}
+
+/* auto-fill dynamically creates as many columns as can fit within the container's width, while making sure each column is at least 100px wide.
+minmax(100px, 1fr) ensures that each column has a minimum width of 100px, but if there's extra space, the columns can grow proportionally (thanks to 1fr). */
+
+.memory-game-element {
+    border: 1px solid rgb(160, 170, 226);
+    height: 100%;
+    background-color:rgb(160, 170, 226) ;
+    cursor: pointer;
+}
+
+.score-container {
+    height: 50px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+@keyframes shake {
+    0% {
+        transform: translate(0);
+    }
+    25% {
+        transform: translate(-20px);  
+    }
+    50% {
+        transform: translate(20px);
+    }
+
+    75% {
+        transform: translate(-20px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.start-button {
+    padding: 5px;
+    margin-top: 10px;
+    width: 100px;
+    cursor: pointer;
+}
