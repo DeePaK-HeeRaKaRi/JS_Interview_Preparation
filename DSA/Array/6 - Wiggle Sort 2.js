@@ -1,4 +1,5 @@
 var wiggleSort = function(nums) {
+    // a[i] > a[i+1] < a[i+2] > a[i+3]   > output should look like
     const nums1 = [...nums.sort((a,b) => a-b)]
     let n=nums1.length - 1
     let mid = Math.floor(n/2)
