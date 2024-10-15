@@ -11,5 +11,55 @@
     <a href="https://leetcode.com/discuss/interview-experience/3641593/Tekion-or-SSE-Frontend-or-Bengaluru-or-Jun-2023-Reject" target="_blank">INterview Link</a>
     <p>Make class component using ES5
     Use above class component creating function createInstance without using new keyword</p>
+    <br/>
+    <h3>Reflow v/s Repaint in Rendering</h3>
+    <a href="https://medium.com/swlh/what-the-heck-is-repaint-and-reflow-in-the-browser-b2d0fb980c08">
+        https://medium.com/swlh/what-the-heck-is-repaint-and-reflow-in-the-browser-b2d0fb980c08
+    </a>
+    
+
+    <h3>Reflow</h3>
+    <p>
+        When it happens: Reflow is triggered by changes that affect the layout of the document. For example:
+        <ul>
+            <li>Adding or removing elements from the DOM</li>
+            <li>Changing the size (width, height) or position of elements.</li>
+            <li>Modifying properties like padding, border, margin, or display.</li>
+            <li>Chaning the font sizes</li>
+            <li>left or top</li>
+        </ul>
+    </p>
+
+    <h3>Repaint</h3>
+    <p>
+        When it happens: Repaint is triggered by changes to visual styles that do not require a recalculation of the layout, such as:
+        <li>- >>Changing color, background-color, visibility, or outline.</li>
+        <li>- >>Modifying box-shadow, or border-color.</li>
+        
+    </p>
+
+    <p>
+        Optimizations:
+        <br>
+Minimize layout changes (reflow) by batching DOM changes or using CSS properties that only trigger repaints.
+Avoid frequent or unnecessary changes that trigger both reflow and repaint in critical sections of the page (e.g., during scroll or animations). Use strategies like requestAnimationFrame for smoother animations.
+    </p>
+
+
+    <p>-------------------</p>
+    <p>-------------------</p>
+
+    <h3>CSS animation - Why transform attribute is preferred ?</h3>
+    <p>Avoids Layout Recalculation (Reflow)</p>
+    <p>transform: translate() is that it leverages GPU acceleration, </p>
+    <p>smoother animations and transitions because the browser moves the element without recalculating the layout of the entire page.</p>
+    <p>left,right,top,width,height > relay on CPU , but transform relay of GPU >  resulting in faster and more efficient rendering.</p>
+
+    <p>-------------------</p>
+    <p>-------------------</p>
+    
+    <a href="https://www.freecodecamp.org/news/event-bubbling-in-javascript/#how-to-stop-event-bubbling">
+        https://www.freecodecamp.org/news/event-bubbling-in-javascript/#how-to-stop-event-bubbling
+    </a>
 </body>
 </html>
