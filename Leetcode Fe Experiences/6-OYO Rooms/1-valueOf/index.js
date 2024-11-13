@@ -26,6 +26,11 @@ if (a == 1 && a == 2 && a == 3) {
   console.log("The condition is false");
 }
 
+//In the expression a == 1, JavaScript encounters a, which is an object, and expects a primitive for the == comparison.
+// JavaScript calls a.valueOf() automatically to attempt this conversion.
+// -- So, in short: You don't need to call valueOf directly; JavaScript will do this as part of its internal type coercion.
+// The valueOf method returns a different value each time (1, then 2, then 3 in our example) to make the expression a == 1 && a == 2 && a == 3 evaluate as true.
+
 // In this code, a is an object with a custom valueOf method. This method is automatically called when the object is used in a numeric context, such as in a comparison or arithmetic operation.
 //  It returns the value property and increments it by 1 each time it's called.
 

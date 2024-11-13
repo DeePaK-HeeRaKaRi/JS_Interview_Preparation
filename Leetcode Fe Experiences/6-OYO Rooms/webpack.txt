@@ -1,0 +1,38 @@
+The Webpack dependency graph is a core concept in Webpack's module bundling system. Here’s an overview of how it works and why it’s critical:
+
+What Is a Dependency Graph?
+In Webpack, a dependency graph is a representation of all the modules your application needs, organized based on their dependencies. Each module in the graph is a node, and edges represent the relationships or dependencies between them.
+
+Entry Point: Webpack starts from a specified entry point, typically a JavaScript file, like index.js, and begins to analyze the dependencies.
+
+Module Analysis: For each module (including your entry file and any imported files), Webpack:
+
+Reads the module's source code.
+Identifies import or require statements to find other files that the module depends on.
+Graph Construction: As Webpack discovers dependencies, it constructs a graph where each module is a node, and edges represent dependency paths.
+
+Dependency Resolution: Webpack recursively follows each dependency to build a complete map of all files and assets required by your application.
+
+Why Webpack Builds a Dependency Graph
+Tree Shaking: The dependency graph helps Webpack identify unused code paths, allowing it to remove (or “shake out”) code that isn’t referenced anywhere, reducing bundle size.
+
+Code Splitting: By understanding how modules are connected, Webpack can split code into chunks, so your app only loads what’s needed for a specific route or feature.
+
+Efficient Caching: Modules that aren’t changed don’t need to be reloaded in future builds, allowing Webpack to cache modules more efficiently.
+Example of a Dependency Graph
+If index.js imports utils.js and api.js, and api.js in turn imports http.js, the dependency graph would look something like this:
+
+diff
+Copy code
+index.js
+ ├── utils.js
+ └── api.js
+      └── http.js
+
+
+Root and Edges in the Graph
+Root Node: In the dependency graph, index.js is the root node because it is the entry point for building the graph.
+Edges:
+    An edge goes from index.js to utils.js (indicating index.js depends on utils.js).
+    An edge goes from index.js to api.js.
+    Another edge goes from api.js to http.js.

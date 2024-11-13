@@ -1,0 +1,38 @@
+#triangle {
+    /* width: 200px;
+    height:200px; */
+    width: 0px;
+    height: 0px;
+    border-bottom: 150px solid red;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    transform: rotate(180deg);
+}
+
+.left-triangle {
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    /* border-right: 50px solid green; */
+    border-bottom: 150px solid rgb(78, 238, 72); /* Color of the triangle */
+  }
+
+.diamond {
+    
+        width: 100px;
+        height: 100px;
+        background-color: rgb(167, 232, 239);
+        transform: rotate(45deg);
+        margin: 50px;
+    
+}
+
+.moon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: -25px 0 0 0 black; /*Horizontal Vertical blur radius color */
+    background-color: rgb(236, 236, 200);
+}
+
+ 
