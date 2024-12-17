@@ -1,0 +1,33 @@
+Components of the Box Model
+Content
+
+This is where the actual text, images, or other content resides.
+The width and height of the content can be defined explicitly or determined by the content itself.
+Padding
+
+The space between the content and the border.
+Increases the visible size of the element but not its outer size.
+Can be set individually for top, right, bottom, and left:
+css
+Copy code
+
+Border
+
+The line surrounding the padding (or the content, if padding is 0).
+Can have width, style, and color.
+
+Margin
+
+The space outside the border, separating the element from other elements.
+Used for spacing between elements.
+
+
+box-sizing and Its Impact on the Box Model
+
+content-box (default):
+Width/height apply only to the content.
+Padding and border are added outside the specified width/height.
+
+border-box:
+Width/height include content, padding, and border.
+The element's actual size stays within the specified dimensions.

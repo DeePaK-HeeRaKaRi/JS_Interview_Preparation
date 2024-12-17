@@ -1,0 +1,19 @@
+#container {
+    height: 400px; /* Simulated container height */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.post {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+}
+
+#loadingText {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
