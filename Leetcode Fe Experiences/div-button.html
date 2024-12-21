@@ -1,0 +1,17 @@
+Best Practice
+Always prefer button for interactive actions unless there’s a compelling reason to use a div. If you do use a div, ensure it meets the following:
+
+Add tabindex="0" for keyboard focus.
+Add role="button" for semantics.
+Add keydown handlers to support Enter and Space keys.
+Ensure proper styling for focus and active states.
+By using a button element, you get all this functionality automatically, reducing the risk of errors and ensuring better user experience.
+
+
+"Using button instead of div for click events is better because:
+
+Semantic correctness: Buttons are designed for interactivity, while divs are for layout.
+Accessibility: Buttons are keyboard and screen-reader friendly by default, whereas divs need extra effort to achieve the same.
+Built-in functionality: Buttons provide default behaviors like focus, click via Enter/Space, and form submission without additional code.
+Maintainability: Using buttons makes the code more understandable and aligns with web standards."
+This covers the high-level rationale without going into too much detail.

@@ -1,42 +1,11 @@
 
-// const getHexColor=(color) => {
-//     const div= document.createElement('div')
-//     div.style.color=color
-//     let colors=window.getComputedStyle(document.body.appendChild(div)) //it will convert to rgb()
-//     console.log(colors.color)
-//     colors=colors.color.match(/ \d+ /g).map(function(a){
-//         return Number(a)
-//     })
-//     document.body.removeChild(div)
-//     console.log(colors)
-//     // here we will get in hexadecimal format from [plainText or rbg() or #fff]
-//     const hexa = colors.length >= 3 ? "#" + ((colors[0] << 16) +(colors[1] << 8) + colors[2]).toString(16): false;
 
-//     return hexa
-// }
 const convertRGB_To_HEX=(color)=>{
   // color=Number(color)
   const hex=color.toString(16)
   return hex.length == 1 ? "0"+hex : hex
 }
 console.log('------------------',convertRGB_To_HEX(244), convertRGB_To_HEX(22), convertRGB_To_HEX(185));
-// const getHexColor = (color) => {
-//   const div = document.createElement("div");
-//   div.style.color = color;
-//   let colors = window.getComputedStyle(document.body.appendChild(div)); //any type of color converts into  rgb()
-//   console.log('colors---------',colors.color)
-//   colors = colors.color;
-//   console.log(colors.match(/\d+/g));
-//   const hexaColor =
-//     "#" +
-//     colors
-//       .match(/\d+/g)
-//       .map((value) => Number(value).toString(16).padStart(2, "0"))
-//       .join("");
-//   console.log(hexaColor);
-//   document.body.removeChild(div);
-//   return hexaColor;
-// }
 
 const getHexColor = (color) => {
   const div = document.createElement("div");
