@@ -1,0 +1,44 @@
+.container {
+    width:1200px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+   margin: auto;
+}
+.table-container {
+    height: 90%;
+    width: 100%;
+    border: 1px solid grey;
+}
+
+.table-container table {
+    width: 100%;
+    overflow-y: scroll;
+    /* border-collapse: collapse; */
+}
+.table-container table thead {
+    background-color: grey;
+    color: #fff;
+    /* width: 100%; */
+}
+
+
+th,td{
+    padding: 11px 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    /* gap: 1px; */
+  }
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.footer-container button {
+    padding: 8px;
+    margin-left: 10px;
+    cursor: pointer;
+}
