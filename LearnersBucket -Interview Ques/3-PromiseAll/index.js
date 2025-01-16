@@ -65,18 +65,18 @@ const promiseAll = (taskList) => {
 //   });
 // };
 
-// const timer=(time) => {
-//     return new Promise((resolve,reject) => {
-//         setTimeout(()=>{
-//             if(time>=3000){
-//                 reject(`rejected - the time is is greater than 3000`)
-//             }else{
-//                 resolve(time)
-//             }
+const timer=(time) => {
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{
+            if(time>=3000){
+                reject(`rejected - the time is is greater than 3000`)
+            }else{
+                resolve(time)
+            }
 
-//         },time)
-//     })
-// }
+        },time)
+    })
+}
 
 const taskList = [timer(2000), timer(1000), timer(3000)];
 promiseAll(taskList)

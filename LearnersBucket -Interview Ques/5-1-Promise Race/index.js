@@ -40,8 +40,8 @@
 // );
 
 
-// Polyfill for Promise any
-const promiseAny=(tasks)=>{
+// Polyfill for Promise Race
+const PromiseRace=(tasks)=>{
     return new Promise((resolve,reject) => {
         tasks.forEach((task) =>{
             task.then((val)=>{
@@ -67,7 +67,7 @@ const promise3 = new Promise((resolve, reject) => {
 
 const tasks = [promise1, promise2, promise3];
 
-promiseAny(tasks)
+PromiseRace(tasks)
 .then((val)=>{
     console.log(val)
 })
