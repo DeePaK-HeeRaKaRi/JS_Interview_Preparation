@@ -3,6 +3,16 @@ const STATE={
     PENDING:'pending',
     REJECTED:'rejected'
 }
+
+/*
+The private fields like #thenCbs, #catchCbs, #state, and #value are declared outside the constructor for several key reasons:
+Clarity and Modern JavaScript Practices:
+Cleaner Constructor:
+Default Values:
+Consistency and Maintainability:
+No Dependence on Constructor Arguments:
+
+*/
 class MyPromise{
     // (resolev,reject) -> cb
     #thenCbs=[]
@@ -21,10 +31,11 @@ class MyPromise{
             this.#onFail(e)
         } 
     }
+     // Method to execute all stored callbacks based on the current state
     #runCallbacks(){
         if(this.#state === STATE.FULFILLED){
             this.#thenCbs.forEach(callback => {
-                callback(this.#value)
+                callback(this.#value)  // Call each 'then' callback with the value
             })
             // .then() .then() new promise so previous callbacks should be removed
             this.#thenCbs=[]
@@ -42,7 +53,7 @@ class MyPromise{
         console.log('------------value',value)
         // whenever success or failed we make sure that we dont actually execute the code immmediately just wait for microseconds
         queueMicrotask(() => {
-            if(this.#state !== STATE.PENDING) return
+            if(this.#state !== STATE.PENDING) return // Prevent further processing if the promise is not pending
 
             // inside of our success methids we have to handle both promise and values
             // p.then(() => {
@@ -53,11 +64,11 @@ class MyPromise{
             // so if it has a promise finish that promise
             if(value instanceof MyPromise){
                 console.log('yes instance---------')
-                value.then(this.#onSuccessBinded,this.#onFailureBinded)
+                value.then(this.#onSuccessBinded,this.#onFailureBinded) // Chain this promise if it’s another MyPromise
             }
-            this.#value=value
-            this.#state=STATE.FULFILLED
-            this.#runCallbacks()
+            this.#value=value // Store the value (resolved value)
+            this.#state=STATE.FULFILLED // Change state to 'fulfilled'
+            this.#runCallbacks()  // Run any stored 'then' callbacks
         })
     }
 
@@ -65,14 +76,14 @@ class MyPromise{
         // promises always have asynchronously
         // setTimeout(() => {},0)
         queueMicrotask(() => {
-            if(this.#state !== STATE.PENDING) return
+            if(this.#state !== STATE.PENDING) return // Prevent further processing if the promise is not pending
 
             if(value instanceof MyPromise){
-                value.then(this.#onSuccessBinded,this.#onFailureBinded)
+                value.then(this.#onSuccessBinded,this.#onFailureBinded) // Chain this promise if it’s another MyPromise
             }
-            this.#value=value
-            this.#state=STATE.REJECTED
-            this.#runCallbacks()
+            this.#value=value // Store the error (rejection reason)
+            this.#state=STATE.REJECTED // Change state to 'rejected'
+            this.#runCallbacks()  // Run any stored 'catch' callbacks
         })
         
     }
@@ -95,12 +106,14 @@ class MyPromise{
     // p.then(()=>{},()=>{})  then catch
     then(thenCb,catchCb){
         // console.log('-----------then',thenCb,catchCb)
+         // Return a new MyPromise to enable chaining
         return new MyPromise((resolve,reject) => {
+          // Store success callback to execute when promise is fulfilled
             this.#thenCbs.push(result => {
                 // .then().catch().then() so if 1st then is executed we have to skip 2nd catch()
                 // .then(()=>{console.log('modfjgnf)})
                 if(thenCb == null){
-                    resolve(result)
+                    resolve(result)  // Resolve if no 'then' callback is provided
                     return 
                 }
                 try{
@@ -128,149 +141,178 @@ class MyPromise{
         })
     }
 
+    // Method to handle .catch() chaining (only for rejection)
     catch(cb){
         console.log(cb)
-        this.then(undefined,cb)
+        this.then(undefined,cb)   // Pass the 'catch' callback to the 'then' method
     }
 
+    // Method to handle .finally() chaining
     finally(cb) {
-        // p.then().finally().then() if inside 1st then if we return result it will not pass to finally insted it will go to next then()
-        return this.then(result => {
-            // dont pass the result to the cb skip it insted return result
-            cb()
-            return result
-        },
-        result => {
-            cb()
-            throw result
-        }
-        )
-    }
+      return this.then(
+          result => {
+              try {
+                  cb(); // Execute the callback, and ensure errors are caught.
+              } catch (error) {
+                  // If an error occurs inside the `finally` callback, propagate it.
+                  throw error;
+              }
+              // Pass the resolved value to the next handler.
+              return result;
+          },
+          error => {
+              try {
+                  cb(); // Execute the callback, and ensure errors are caught.
+              } catch (newError) {
+                  // If an error occurs inside the `finally` callback, propagate it.
+                  throw newError;
+              }
+              // Pass the rejection reason to the next handler.
+              throw error;
+          }
+      );
+  }
+
+  // Static method to resolve a promise with a given value
     static resolve(value){
         return new MyPromise((resolve) => {
-            resolve(value)
+            resolve(value) // Immediately resolve the promise with the given value
         })
     }
-    static reject(value){
-        return new MyPromise((resolve,reject) => {
-            resolve(value)
-        })
-    }
+ 
+    // Static method to reject a promise with a given value
+    static reject(value) {
+      return new MyPromise((resolve, reject) => {
+          reject(value); // Corrected to use reject
+      });
+  }
+  
 }
-// const p=new MyPromise((resolve,reject) => {
-//     setTimeout(() => {
-//       // reject(new Error('Deepak '))
-//       resolve("Deepak");
-//       // resolve('kumar')  need to call only once so keep this check  if(this.#state !== STATE.PENDING) return in above , same will aply to reject
 
-//       // resolve("kumar");
-//       // resolve("kumar");
-//     },2000)
-// })
-// p.then((value) => {
-//     console.log('result value-',value)
-// })
-// .catch((err)=>{
-//     console.log(err)
-     
-// })
-let cart = ["shoes", "kurtha", "pant"];
-
-function createOrder(cart) {
-  const pr = new MyPromise(function (resolve, reject) {
-    // createOrder
-    // validateOrder from db
-    console.log("validate", !validCart(cart));
-    if (!validCart(cart)) {
-      const err = new Error("Cart is not valid");
-      reject(err);
-    }
-    // fetch ordreId
-    const orderid = "12345";
-    if (orderid) {
+// Custom function simulating an async task
+function asyncTask(message, delay, shouldReject = false) {
+  return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(orderid);
-      }, 2000);
-    } else {
-      reject(new Error("Order is not valid"));
-    }
-  });
-  return pr;
-}
-function validCart(cart) {
-  return false;
-}
-
-function proceedToPayment(orderId) {
-  return new MyPromise(function (resolve, reject) {
-    // setTimeout(()=>{
-    //     resolve("Your Payment was Sucessfull")
-    // },2000)
-    if (!validCart("fhhfdf")) {
-      reject(new Error("No Payment"));
-    } else {
-      resolve("Your Payment was Sucessfull");
-    }
-
-    // const err=new Error('Payment Failed')
-    // reject(err)
+          if (shouldReject) {
+              reject(`${message} failed!`);
+          } else {
+              resolve(`${message} succeeded!`);
+          }
+      }, delay);
   });
 }
 
-createOrder(cart)
-  // if anyone we will get reject it will simply execute the catch block
-  // and it will not execute after .then method
-  // console.log('cart is',cart)
-  .then(function (orderId) {
-    console.log("orderid------", orderId);
-    return orderId;
+// Simulating jumbled usage of then, catch, and finally with multiple steps
+asyncTask("Order processing", 1000)
+  .then((result) => {
+      console.log(result);  // Order processing succeeded!
+      return asyncTask("Payment processing", 2000);
   })
-  // if we want catch only for creating order than place here else place bottom
-  .catch(function (err) {
-    console.log("ordeer-------", err.message);
+  .catch((error) => {
+      console.error("Error during order processing:", error);  // Not executed unless the first task fails
+      return "Recovered from order processing error.";
   })
-  .then(function (orderId) {
-    return proceedToPayment(orderId);
-  })
-  .then(function (paymentInfo) {
-    console.log("payment Info ->", paymentInfo);
-    return paymentInfo;
-  })
-  .catch(function (err) {
-    console.log(err.message);
-  })
-  .then(function (paymentDetails) {
-    console.log(
-      "NO matter what happens, i will definitely called",
-      paymentDetails
-    );
-    return "okoko1";
+  .then((result) => {
+      console.log(result);  // Payment processing succeeded!
+      return asyncTask("Shipment processing", 1500);
   })
   .finally(() => {
-    console.log("FInished----------------");
-    return "okoko";
+      console.log("Cleaning up after order processing...");  // Always executed after any task
   })
-  .then((dummy) => {
-    console.log("after finished", dummy);
+  .then((result) => {
+      console.log(result);  // Shipment processing succeeded!
+      return asyncTask("Notification sending", 500);
+  })
+  .catch((error) => {
+      console.error("Error during shipment processing:", error);  // Not executed unless shipment task fails
+  })
+  .finally(() => {
+      console.log("Cleaning up after shipment...");  // Always executed after shipment task
+  })
+  .then((result) => {
+      console.log(result);  // Notification sending succeeded!
+      return asyncTask("Final confirmation", 1000, true);  // This will fail
+  })
+  .catch((error) => {
+      console.error("Error during final confirmation:", error);  // Final confirmation failed
+  })
+  .finally(() => {
+      console.log("Final cleanup after confirmation...");  // Always executed after final confirmation task
+  })
+  .then(() => {
+      console.log("Order process completed!");
+  })
+  .catch((error) => {
+      console.error("Order process failed:", error);  // Catch final error if any
+  })
+  .finally(() => {
+      console.log("Global cleanup after entire process...");  // Always executed after everything
   });
 
-// module.exports=MyPromise
 
-// inside of our success methids we have to handle both promise and values
-// p.then(() => {
-    // return new Promise
-//     return "hi"
-// })
-// .then(())
+// Example usage of MyPromise with createOrder and proceedToPayment functions
+// let cart = ["shoes", "kurtha", "pant"];
 
-// const res=new Promise((resolve,reject)=>{
-//     setTimeout(()=>{
-//         reject(new Error('deepak'))
-//     },1000)
-// })
-// res.then((val)=>{
-//     console.log(val)
-// })
-// .catch((err)=>{
-//     console.log(err)
-// })
+// function createOrder(cart) {
+//     const pr = new MyPromise(function (resolve, reject) {
+//         console.log("validate", !validCart(cart));
+//         if (!validCart(cart)) {
+//             const err = new Error("Cart is not valid");
+//             reject(err);  // Reject if the cart is not valid
+//         }
+//         const orderid = "12345";
+//         if (orderid) {
+//             setTimeout(() => {
+//                 resolve(orderid);  // Resolve with the order ID after a delay
+//             }, 2000);
+//         } else {
+//             reject(new Error("Order is not valid"));  // Reject if the order ID is invalid
+//         }
+//     });
+//     return pr;
+// }
+
+// function validCart(cart) {
+//     return false;  // Simulating a validation failure
+// }
+
+// function proceedToPayment(orderId) {
+//     return new MyPromise(function (resolve, reject) {
+//         if (!validCart("fhhfdf")) {
+//             reject(new Error("No Payment"));  // Reject if cart validation fails
+//         } else {
+//             resolve("Your Payment was Sucessfull");  // Resolve if payment is successful
+//         }
+//     });
+// }
+
+// // Chaining promises with then/catch/finally
+// createOrder(cart)
+//     .then(function (orderId) {
+//         console.log("orderid------", orderId);
+//         return orderId;
+//     })
+//     .catch(function (err) {
+//         console.log("ordeer-------", err.message);
+//     })
+//     .then(function (orderId) {
+//         return proceedToPayment(orderId);  // Proceed to payment if order creation succeeds
+//     })
+//     .then(function (paymentInfo) {
+//         console.log("payment Info ->", paymentInfo);
+//         return paymentInfo;
+//     })
+//     .catch(function (err) {
+//         console.log(err.message);  // Catch any errors in the process
+//     })
+//     .then(function (paymentDetails) {
+//         console.log("NO matter what happens, i will definitely called", paymentDetails);
+//         return "okoko1";
+//     })
+//     .finally(() => {
+//         console.log("FInished----------------");
+//         return "okoko";  // 'finally' is always executed at the end
+//     })
+//     .then((dummy) => {
+//         console.log("after finished", dummy);
+//     });
