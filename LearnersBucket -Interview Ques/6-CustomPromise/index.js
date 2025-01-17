@@ -15,7 +15,7 @@ No Dependence on Constructor Arguments:
 */
 class MyPromise{
     // (resolev,reject) -> cb
-    #thenCbs=[]
+    #thenCbs=[] //If two diff callbacks run on the success , so take array
     #catchCbs=[]
     #state=STATE.PENDING
     #value
@@ -65,6 +65,7 @@ class MyPromise{
             if(value instanceof MyPromise){
                 console.log('yes instance---------')
                 value.then(this.#onSuccessBinded,this.#onFailureBinded) // Chain this promise if it’s another MyPromise
+                return
             }
             this.#value=value // Store the value (resolved value)
             this.#state=STATE.FULFILLED // Change state to 'fulfilled'
@@ -80,6 +81,7 @@ class MyPromise{
 
             if(value instanceof MyPromise){
                 value.then(this.#onSuccessBinded,this.#onFailureBinded) // Chain this promise if it’s another MyPromise
+                return
             }
             this.#value=value // Store the error (rejection reason)
             this.#state=STATE.REJECTED // Change state to 'rejected'
@@ -109,64 +111,57 @@ class MyPromise{
          // Return a new MyPromise to enable chaining
         return new MyPromise((resolve,reject) => {
           // Store success callback to execute when promise is fulfilled
+
+        //   resolve("Hi") > result will take hi
             this.#thenCbs.push(result => {
                 // .then().catch().then() so if 1st then is executed we have to skip 2nd catch()
                 // .then(()=>{console.log('modfjgnf)})
-                if(thenCb == null){
+                if(!thenCb){
                     resolve(result)  // Resolve if no 'then' callback is provided
                     return 
                 }
                 try{
                     // .then(return 'hi').catch().then() hi should passs to the next then
                     // resolve with prev promise
-                    return resolve(thenCb(result));
+                    resolve(thenCb(result));
                 }catch(error){
-                    return reject(error);
+                    reject(error);
                 }
             })
 
             this.#catchCbs.push(result => {
                
-                if(catchCb == null){
+                if(!catchCb){
                     reject(result)
                     return 
                 }
                 try{
                      
-                    return reject(catchCb(result));
+                     reject(catchCb(result));
                 }catch(error){
-                    return reject(error);
+                     reject(error);
                 }
             })
+            this.#runCallbacks(); 
         })
     }
 
     // Method to handle .catch() chaining (only for rejection)
     catch(cb){
         console.log(cb)
-        this.then(undefined,cb)   // Pass the 'catch' callback to the 'then' method
+        return this.then(undefined,cb)   // Pass the 'catch' callback to the 'then' method
     }
 
     // Method to handle .finally() chaining
     finally(cb) {
       return this.then(
           result => {
-              try {
-                  cb(); // Execute the callback, and ensure errors are caught.
-              } catch (error) {
-                  // If an error occurs inside the `finally` callback, propagate it.
-                  throw error;
-              }
+            cb() // Execute cleanup callback
               // Pass the resolved value to the next handler.
               return result;
           },
           error => {
-              try {
-                  cb(); // Execute the callback, and ensure errors are caught.
-              } catch (newError) {
-                  // If an error occurs inside the `finally` callback, propagate it.
-                  throw newError;
-              }
+              cb()
               // Pass the rejection reason to the next handler.
               throw error;
           }
@@ -175,16 +170,13 @@ class MyPromise{
 
   // Static method to resolve a promise with a given value
     static resolve(value){
-        return new MyPromise((resolve) => {
-            resolve(value) // Immediately resolve the promise with the given value
-        })
+        return new MyPromise((resolve) => { resolve(value)  }) // Immediately resolve the promise with the given value
     }
  
     // Static method to reject a promise with a given value
     static reject(value) {
-      return new MyPromise((resolve, reject) => {
-          reject(value); // Corrected to use reject
-      });
+      return new MyPromise((resolve, reject) => { reject(value) });// Corrected to use reject
+
   }
   
 }
