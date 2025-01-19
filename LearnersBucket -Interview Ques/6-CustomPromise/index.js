@@ -51,6 +51,19 @@ class MyPromise{
     //  #it should not be accessed outside of the class
     #onSuccess(value){
         console.log('------------value',value)
+        /*
+        const promise = new Promise((resolve, reject) => {
+            resolve('First resolve');
+            resolve('Second resolve');
+            reject('This will be ignored');
+            });
+
+            promise.then((result) => {
+            console.log(result); // Output: 'First resolve'
+            });
+
+            Remianing will ingred so keep a check
+        */
         // whenever success or failed we make sure that we dont actually execute the code immmediately just wait for microseconds
         queueMicrotask(() => {
             if(this.#state !== STATE.PENDING) return // Prevent further processing if the promise is not pending
