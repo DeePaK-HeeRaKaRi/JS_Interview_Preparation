@@ -34,8 +34,9 @@ console.log('Implement mapSeries async function')
 // })
 
 let mapSeries = (arr,fn) => {
-    const output = new Promise((resolve,reject)=>{
+    const output =  new Promise((resolve,reject)=>{
         const arrReduce = arr.reduce((prev,curr) => {
+            // This ensures that the prev promise resolves before moving on to the next item.
            return prev.then((val) => {
                 return new Promise((resolve,reject) => {
                     fn(curr,(err,res)=>{
@@ -49,26 +50,34 @@ let mapSeries = (arr,fn) => {
                 })
            })
         },Promise.resolve([]))
+
+        arrReduce
+        .then((resp)=>{
+            resolve(resp)
+        })
+        .catch(err => {
+            reject(err)
+        })
     })
-    
+    return output
 }
 let result=mapSeries([1,2,3,6,4,5],function(num,callback){
     let s = setTimeout(()=>{
         num=num*2
-        console.log(num)
-        if(num==12){
+        console.log({num})
+        if(num==120){
             callback(true)
         }else{
             callback(null,num)
         }
-    },5000)
+    },1000)
 
-    clearTimeout(s)
+    // clearTimeout(s)
 })
-// result
-// .then((resp)=>{
-//     console.log('success',resp)
-// })
-// .catch((err)=>{
-//     console.log('Error -> ',err)
-// })
+result
+.then((resp)=>{
+    console.log('success',resp)
+})
+.catch((err)=>{
+    console.log('Error -> ',err)
+})
