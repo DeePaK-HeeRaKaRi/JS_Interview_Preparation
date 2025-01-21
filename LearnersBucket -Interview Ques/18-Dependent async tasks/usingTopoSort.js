@@ -32,9 +32,10 @@ class Graph {
     for (const key of adjListKeys) {
       indegree.set(key, 0);
     }
-
+    console.log(this.adjacencyList)
     // calculate indegree
     for (const values of adjValues) {
+      console.log({values})
       for (const i of values) {
         indegree.set(i, indegree.get(i) + 1);
       }
@@ -82,7 +83,7 @@ function executeTasks(taskSchedules) {
       );
     }
   });
-
+  console.log('----adj',graph.adjacencyList)
   // Topologicalsort [BFS]
   const executeTasks = graph.topologicalSort();
 
