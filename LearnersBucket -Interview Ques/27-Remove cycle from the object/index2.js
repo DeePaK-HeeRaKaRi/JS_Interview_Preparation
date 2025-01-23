@@ -54,6 +54,24 @@ function removeCycle(head) {
     fast.next = null;
 }
 
+// const removeCycle=(node)=>{
+//     const store = new WeakSet()
+//     let head = node
+//     while(node && node.next) {
+//         // console.log(store)
+//         console.log('--nodeval',node.val)
+//         if(store.has(node.next)) {
+//             console.log('--node',node.val)
+//             node.next = null
+//             return head
+//         }
+//         store.add(node)
+//         node = node.next
+//     }
+//     return head
+// }
+
+
 const List=function(val){
     this.val=val
     this.next=null
