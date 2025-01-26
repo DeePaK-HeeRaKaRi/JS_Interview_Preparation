@@ -18,7 +18,9 @@ var totalFruit = function(fruits) {
             }
             l++
         }
-        maxi = Math.max(maxi,r-l+1)
+        if(Object.keys(hm).length <= baskets) {
+            maxi = Math.max(maxi,r-l+1)
+        }
         r++
     }
     return maxi

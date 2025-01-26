@@ -44,7 +44,6 @@ var minSwaps = function(nums) {
     }
     if(ones == 0) return 0
     nums = [...nums,...nums] //Circular array > first element is adjacent to last element
-    let currDistance = 0
     let zeroCount = 0
     let oneCount = 0
     while(r<nums.length){
@@ -53,7 +52,6 @@ var minSwaps = function(nums) {
         }else{
             oneCount++
         }
-        currDistance = r-l+1
         // To swap atleast we need how many ones are present
         if(zeroCount+oneCount == ones){ // so we can swap and it will become ones subarray
             ans = Math.min(ans,zeroCount)
