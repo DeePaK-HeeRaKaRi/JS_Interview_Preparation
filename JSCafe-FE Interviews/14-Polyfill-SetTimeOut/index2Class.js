@@ -126,7 +126,7 @@ function createSetTimeOutPolyfill(){
           callback.apply(this,args)
           delete timerMap[Id]
         }else{
-          requestIdleCallback(triggerCallback)
+          requestIdleCallback(triggerCallback)  //callback: A function to execute when the browser is idle. 
         }
       }
       triggerCallback()

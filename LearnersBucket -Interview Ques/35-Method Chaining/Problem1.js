@@ -1,3 +1,10 @@
+/*
+Why Arrow Functions Don't Work Well Here
+In your example, methods like add, subtract, etc., rely on this to refer to the calculator object. 
+Arrow functions capture the this from the scope in which they were defined, which is likely the global or outer context, not the calculator object itself.
+arrow functions do not bind their own this but instead inherit it from their surrounding lexical scope.
+*/
+
 // using Objects
 
 // const calculator={
@@ -54,3 +61,17 @@ console.log(calc.total)
 const calc1=new Calculator()
 calc1.add(10).subtract(2).divide(2).multiply(5)
 console.log(calc1.total)
+
+
+/*
+Why Arrow Functions Work Here?
+
+A new object is created and assigned to this inside the Calculator function.
+Arrow functions like add, subtract, divide, and multiply inherit this this from the Calculator function context.
+Thus, when you call methods like calc.add(10), the this in the arrow function correctly refers to the calc instance.
+
+
+Summary
+Constructor Function with new: Arrow functions work because they inherit this from the constructor's scope, which is the instance being created.
+Object Literal: Arrow functions don't work as expected because this in arrow functions is lexically scoped and doesn't bind to the object.
+*/
