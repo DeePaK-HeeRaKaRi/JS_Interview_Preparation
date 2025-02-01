@@ -1,6 +1,6 @@
 Array.prototype.listeners={}
 Array.prototype.addListener=function(eventName,cb){
-    console.log('---------this',this)
+    console.log('---------this',this,this.listeners)
      if(!this.listeners[eventName]){
         this.listeners[eventName]=[]
      }

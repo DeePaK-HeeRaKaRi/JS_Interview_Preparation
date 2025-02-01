@@ -60,28 +60,38 @@
 // }
 
 // this is the more efficient way
+// function flatten(obj, prefix) {
+//   let output = {};
+//   function getFlatten(obj, prefix) {
+//     for (let key in obj) {
+//       let val = obj[key];
+//       let newKey = prefix ? `${prefix}.${key}` : key;
+//       if (obj.hasOwnProperty(key)) {
+//         if (typeof val == "object") {
+//           getFlatten(val, newKey);
+//         } else {
+//           output[newKey] = val;
+//         }
+//       }
+//     }
+//   }
+//   getFlatten(obj, prefix);
+//   return output;
+// }
+
 function flatten(obj, prefix) {
   let output = {};
-  function getFlatten(obj, prefix) {
-    for (let key in obj) {
-      let val = obj[key];
-      let newKey = prefix ? `${prefix}.${key}` : key;
-      if (obj.hasOwnProperty(key)) {
-        if (typeof val == "object") {
-          if (Array.isArray(val)) {
-            // const { ...arrToObj } = val;
-            // console.log('------------',arrToObj)
-            getFlatten(val, newKey);
-          } else {
-            getFlatten(val, newKey);
-          }
-        } else {
-          output[newKey] = val;
-        }
+  for (let key in obj) {
+    let val = obj[key];
+    let newKey = prefix ? `${prefix}.${key}` : key;
+    if (obj.hasOwnProperty(key)) {
+      if (typeof val == "object") {
+        output = {...output,...flatten(val, newKey)}
+      } else {
+        output[newKey] = val;
       }
     }
   }
-  getFlatten(obj, prefix);
   return output;
 }
 let obj = {

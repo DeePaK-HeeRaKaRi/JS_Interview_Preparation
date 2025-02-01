@@ -9,25 +9,27 @@ const get=(obj,path)=>{
     if(path.length==0){
         return "not available in given object"
     }
-    // let exactPath=[]
+    let exactPath=[]
     for(let i=0;i<path.length;i++){
         if(path[i]!=='[' && path[i]!==']' && path[i]!=='.' && path[i]!=='-'){
-            // exactPath.push(path[i])
-            if(obj.hasOwnProperty(path[i])) 
-            { 
-                obj = obj[path[i]]
-            }else{
-                return new Error('Key not found')
-            }
+            exactPath.push(path[i])
+            // if(obj.hasOwnProperty(path[i])) 
+            // { 
+            //     obj = obj[path[i]]
+            // }else{
+            //     return new Error('Key not found')
+            // }
         }
     }
     // console.log(exactPath,obj)
-    return obj ? obj : 'Not available in given object'
+    // return obj ? obj : 'Not available in given object'
 
     // const result=exactPath.reduce((prev,curr)=>{
     //     prev=prev[curr]
     //     return prev
     // },obj)
+    const value = exactPath.reduce((source,path) => source[path] ? source[path] : new Error('Path not found'),obj)
+    return value ? value : undefined
     // console.log(result)
     // return result ? result : "not available in given object"
 }
