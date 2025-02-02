@@ -34,79 +34,53 @@ class NestedCheckBoxes {
     handleCheckBoxChange(event) {
 
         const {id,checked} = event.target
-        const {node,element} = this.nodeCache.get(id)
+        const {node,element} = this.nodeCache.get(id)  //Prevent usuage of document.querySelector
         if(!node) return
         console.log({node},event.target)
         this.updateChildren(node,checked)
-        console.log('After updating',{node})
-        this.updateParents(node) // Now all the update data is here, need to update untill the root level of parent
-
-        this.updateDOM_children(node)
-
-        const nodeParent = this.parentCache.get(node.label)
-        // this.updateDOM_parent(node.parent)
-        this.updateDOM_parent(nodeParent)
+        this.updateParents(node)
+        console.log('--UpdatedData',this.checkListData)
     }
 
+    updateParents(node) {
+        console.log('Updating the parents',{node})
+        let currNode = node
+        while(currNode) {
+            const {label,value} = currNode
 
-    updateDOM_parent(node) {
-        console.log({node})
-        // const {label,value,parent} = node
-        const {label,value} = node
-        let parent = null
-        if(this.parentCache.has(label)) {
-            parent = this.parentCache.get(label)
-        }
-       
-        if(this.nodeCache.has(label)) {  // Get DOm element from cache
-            const checkBox = this.nodeCache.get(label).element
-            console.log({checkBox})
-            checkBox.checked = value ? true : false
+            // update the parent DOM
+            if(this.nodeCache.has(label)) {  //All the child should be updated to newvalues
+                const checkBox = this.nodeCache.get(label).element
+                checkBox.checked = value
+            }
+
+            let parent = null
+            if(this.parentCache.has(label)) {               
+                parent = this.parentCache.get(label)
+            }
+
+            if(!parent) break
+
+            // If the child is unchecked && parent is checked ,uncheck theh parent
+            if(!currNode.value) {
+                parent.value = false
+            }
+
+            currNode = parent
         }
 
-        if(parent) {
-            this.updateDOM_parent(parent)
-        }
     }
-    updateDOM_children(node) {
+    updateChildren(node,newValue) {  
+         
         const {label,value} = node
-       
-        if(this.nodeCache.has(label)) {
+        
+        if(this.nodeCache.has(label)) {  //All the child should be updated to newvalues
             const checkBox = this.nodeCache.get(label).element
             console.log('--------in children',{checkBox})
             console.log({checkBox})
-            checkBox.checked = value ? true : false
+            checkBox.checked = newValue
         }
         
-        if(node.children) {
-            node.children.forEach(child => this.updateDOM_children(child))
-        }
-    }
-    updateParents(node) {
-        console.log('Updating the parents',{node})
-        // if(!node.parent) return // Stop at root
-
-        // const parent = node.parent
-
-        let parent = null
-        if(this.parentCache.has(node.label)) {
-            parent = this.parentCache.get(node.label)
-        }
-
-        if(!parent) return // Stop at root
-
-        // let hasChecked = false
-        // let hasUnchecked = false
-        // when the child is set to false and parent is set to true than we need to make the parent as false
-        if(parent.value && node.value == false) {
-            parent.value = false
-        }
-
-        this.updateParents(parent)
-
-    }
-    updateChildren(node,newValue) {
-        console.log('--------updateChildren', {node,newValue})
         node.value = newValue
         if(node.children) {
             node.children.forEach((child) => this.updateChildren(child,newValue))
@@ -114,7 +88,7 @@ class NestedCheckBoxes {
     }
 
     constructCheckBoxes(node,parent=  null) {
-       
+       console.log('-node,parent',{node,parent})
         const {label,value,children = []} = node
 
         this.parentCache.set(label,parent)
