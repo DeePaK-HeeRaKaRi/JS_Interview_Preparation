@@ -11,7 +11,15 @@ function cssSelector_nth(root,target) {
 
         if(root == target) {
             const tagName = root.tagName.toLowerCase()
-            const selector = `${tagName}[id="${root.id}"]`
+            let selector = ''
+            
+            if(root.hasAttribute('class')) {
+                selector = `${tagName}[id="${root.className}"]`
+            }
+            else if(root.hasAttribute('id')) {
+                selector = `${tagName}[id="${root.id}"]`
+            }
+            // const selector = `${tagName}[id="${root.id}"]`
             path.unshift(selector)
         }
     }
@@ -65,7 +73,20 @@ function cssSelector(root,target) {
 const target = document.querySelector('#target')
 const root = document.querySelector('#root')
 
+//div[id="root"] > section:nth-child(2) > p:nth-child(1) > span:nth-child(1) > button:nth-child(2)
+console.log(cssSelector_nth(root,target))  
 
-// console.log(cssSelector_nth(root,target))
+// console.log(cssSelector(root,target))
 
-console.log(cssSelector(root,target))
+
+/*
+
+div[id="root"] is a CSS selector that specifically 
+targets a <div> element with the id attribute set to "root".
+
+Explanation:
+div → Selects all <div> elements.
+[id="root"] → Filters the selection to only those <div> elements where the id is "root".
+
+
+*/

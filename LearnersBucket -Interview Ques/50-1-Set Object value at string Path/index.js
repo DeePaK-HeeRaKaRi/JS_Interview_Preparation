@@ -43,7 +43,7 @@ const obj = {
 
 console.log(set(obj,'a.f[0]','deepak'))
 // console.log(set(obj, 'a.b.c', 'learnersbucket'))
-// console.log(set(obj, 'a.b.c[0]', 'learnersbucket'))
+console.log(set(obj, 'a.b.c[0]', 'learnersbucket'))
 // console.log(set(obj, 'a.b.c[9]', 'learnersbucket'))
 // console.log(set(obj, 'f[2]', 'learnersbucket'))
 // console.log(set(obj,'test[0]','deepak'))

@@ -40,7 +40,7 @@ class myJSON{
         }
         obj=this.removeCycle(obj)
         const objString = Object.keys(obj).map((v) => {
-            return typeof v == 'function' ? null : 
+            return typeof obj[v] == 'function' ? null : 
                 `"${v}":${this.value(obj[v])}`
         })
         return `{${objString}}`
