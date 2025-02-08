@@ -13,7 +13,7 @@ const throttle = (func, count, tasks, delay)=>{
             const executeTasks = queue.splice(0,count)
             func(executeTasks);
             lastRun = Date.now()
-        }else{
+        } else {
             // clear lastFunc
             clearTimeout(lastFunc)
             lastFunc = setTimeout(() => {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Form Validation -& Table</h2>
+    <form id="userForm">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name">
+        <span class="error" id="nameError">Invalid Name (Only letters and spaces allowed)</span>
+        <br><br>
+
+        <label for="mobile">Mobile:</label>
+        <input type="text" name="mobile" id="mobile">
+        <span class="error" id="mobileError">Invalid Mobile (Must be exactly 10 digits)</span>
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email">
+        <span class="error" id="emailError">Invalid Email (Must be a valid format)</span>
+        <br><br>
+
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <input id="search" type="text" />
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script src="./index.js"></script>
+</body>
+</html>

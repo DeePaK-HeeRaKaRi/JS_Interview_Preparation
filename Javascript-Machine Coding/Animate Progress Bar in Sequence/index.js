@@ -25,7 +25,7 @@ function add(){
 //     ele.style.background=randomRgbColor()
 //     setTimeout(()=>{
 //         ele.classList.add("fullWidth");
-//     },100)
+//     },1000)
 //     root.appendChild(ele)
 //     ele.addEventListener('transitionend',()=>{
 //         count-=1

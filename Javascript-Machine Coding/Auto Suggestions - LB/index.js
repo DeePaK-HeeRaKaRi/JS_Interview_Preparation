@@ -63,6 +63,7 @@ import { getSearchResults } from "./util.js";
   };
 
   const onBlur = (e) => {
+    console.log('in Blurred',e.target)
     if (e.target === input || e.target === suggestionArea) {
       return;
     }
