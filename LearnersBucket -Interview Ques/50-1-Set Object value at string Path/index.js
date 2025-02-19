@@ -16,7 +16,7 @@ function helper(obj,path,value) {
         }
         
     }
-    else{
+    else{   
         obj[current] = value
     }
     return obj

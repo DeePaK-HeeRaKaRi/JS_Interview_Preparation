@@ -12,7 +12,7 @@ var scoreOfParentheses = function(s) {
             }
             else{ 
                 score = 0
-                while(st.length>0 && st[st.length-1] != '(') {
+                while(st.length>0 && st[st.length-1] != '(') {  //"(()(()))" [(,1,2]
                     score += st.pop()
                 }
                 st.pop()

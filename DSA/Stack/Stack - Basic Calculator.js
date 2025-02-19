@@ -1,62 +1,37 @@
-var calculate = function(str) {
-    str=str.match(/(\d+|\+|\-|\*|\/)/g)
-    // console.log(str)
-    let arr = []
-    let curr_number = 0
-    let curr_operator = '+'
-    for(let i of str){
-        if(['+','-'].includes(i)){
-            let arr_top = arr[arr.length-1]
-            if(['+','-'].includes(arr_top)){
-                arr.pop()
-                if((arr_top == '+' && i == '+') || (arr_top == '-' && i == '-') ) {
-                    arr.push('+')
-                }
-                else if((arr_top == '+' && i == '-') || (arr_top == '-' && i == '+')){
-                    arr.push('-')
-                }
-            }
-            else{
-                arr.push(i)
-            }
+var calculate = function(s) {
+    let ans = 0
+    let num = 0
+    let sign = 1 // 1> +, -1 > -
+    let stack = [sign]
+ 
+    for (let i of s) {
+        if(!isNaN(i) && i!=' ') {
+            num = num * 10 + Number(i)
+            console.log(num,typeof num)
         }
-        else{
-            if(arr.length > 0){
-                let arr_top = arr[arr.length-1]
-                if(['+','-'].includes(arr_top)) {
-                    let t=arr.pop()
-                    if(t == '+'){
-                        arr.push(Number(i))
-                    }
-                    else{
-                        arr.push(-Number(i))
-                    }
-                }
-                else{
-                    arr.push(Number(i))
-                } 
-            }
-            else{
-                arr.push(Number(i))
-            }
-                
+        else if(i == '('){
+          stack.push(sign)
+        }
+        else if(i == ')') {
+            stack.pop()
+        }
+        else if(i == '+' || i == '-'){
+            ans += num * sign
+            // console.log({ans})
+            num = 0
+            sign = i == '+' ? 1 : -1
+            if(stack.length > 0) sign = sign * stack[stack.length -1]  
         }
     }
-    console.log(arr)
-    let res = 0
-    while(arr.length > 0) {
-        res += arr.pop()
-    }
-
-    // console.log(res)
-    return res
-
+    ans += num * sign
+    return ans
 };
-
+ 
 let s = "(1+(4+5+2)-3)+(6+8)"
-s = "- (3 + (4 + 5))"
+s= '1 +  1'
+// s = "- (3 + (4 + 5))"
 // s = "1-(     -2)20"
 // s = '1-(-(-2))'
+// console.log(calculate(s))
 console.log(calculate(s))
-
 // [ 3, '*',2,'+', 5,'/', 2,'-', 10 ]

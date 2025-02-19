@@ -17,8 +17,11 @@ const fuzzySearch=(str,query)=>{
     }
     return false
 }
+
+const fuzzySearch_1 = (str, query) => str.toLowerCase().includes(query.toLowerCase());
+
 const search = (arr, query) => {
-  return arr.filter((val) => fuzzySearch(val,query));
+  return arr.filter((val) => fuzzySearch_1(val,query));
 };
 const arr = [
   "Doomsayer",

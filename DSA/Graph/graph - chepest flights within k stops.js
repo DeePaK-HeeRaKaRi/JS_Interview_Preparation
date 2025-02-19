@@ -46,3 +46,10 @@ let src = 0
 let dst = 2
 let k = 1
 console.log(findCheapestPrice(n, flights, src, dst, k))
+
+
+
+let h = new Map()
+h.set('deep',[[1,2],[2,4]])
+
+console.log(h.get('deep'))

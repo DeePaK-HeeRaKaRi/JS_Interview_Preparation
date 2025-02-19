@@ -57,14 +57,24 @@ function useCutomCookie(){
     Object.defineProperty(document,'myCookie',{
         configurable:true,
         get(){
-
+            let cookies =[]
+            for(const [key,{value, expires}] of store) {
+                console.log({key,value,expires})
+                if (expires <= Date.now()) {
+                    store.delete(key)
+                }
+                else {
+                    cookies.push(`${key}=${value}`)
+                }
+            }
+            return cookies.join('; ')
         },
         set(val){
             console.log('-val-------',val)
             const { key, value, options } = getParseString(val)
             let expires= Infinity
             if(options.maxAge){
-                expires = Date.now() + options.maxAge;
+                expires = Date.now() + Number(options.maxAge) * 1000;
             }
             store.set(key, { value, expires });
         }
@@ -87,9 +97,9 @@ function seperatedValue(str){
 }
 
 useCutomCookie();
-document.myCookie = "blog=learnersbucket";
+document.myCookie = "blog=learnersbucket"; //set will be triggered
 // this will expire after 1 second
-document.myCookie = "name=prashant;maxAge=1";
+document.myCookie = "name=prashant;maxAge=1"; // get will be triggered
 console.log(document.myCookie);
 setTimeout(() => {
   console.log(document.myCookie);

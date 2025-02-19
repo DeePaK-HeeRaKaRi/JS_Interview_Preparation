@@ -9,7 +9,7 @@ const pipe=(obj)=>{
                 obj[key]=curr.apply(this,[...args])
                 // obj[key] = curr.call(this, ...args);
             }else{
-                pipe(curr)(...args)
+               obj[key] = pipe(curr)(...args)
             }
             console.log(curr)
         }

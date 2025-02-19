@@ -108,3 +108,48 @@ console.log(counter)
 // instance2.addData("Item 2");
 
 // console.log(instance2.getData());
+
+
+/*
+class Logger {
+    constructor() {
+        if (Logger.instance) {
+            return Logger.instance; // Return existing instance if already created
+        }
+        this.logs = [];
+        Logger.instance = this; // Store instance in a static property
+    }
+
+    log(message) {
+        this.logs.push(message);
+        console.log(`[LOG]: ${message}`);
+    }
+
+    getLogCount() {
+        return this.logs.length;
+    }
+}
+
+// Singleton instance
+const logger1 = new Logger();
+logger1.log("User logged in");
+
+const logger2 = new Logger();
+logger2.log("User clicked a button");
+
+console.log(logger1 === logger2); // true (both are the same instance)
+console.log(logger1.getLogCount()); // 2 (shared state)
+
+When to Use Singleton?
+✅ Use Singleton when:
+
+You need a single point of access to a shared resource (e.g., logging, caching).
+You want to ensure data consistency across multiple parts of your application.
+You want to control global states without multiple instances.
+
+❌ Avoid Singleton when:
+
+It creates hidden dependencies, making the code harder to test.
+It leads to unnecessary global variables, which might be an anti-pattern in large applications.
+It can make the code harder to reason about due to its global nature.
+*/

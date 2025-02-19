@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+.container__input {
+    display: flex;
+}
+.container__input--label,
+.container__button--label {
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    padding: 5px;
+}
+
+.container__button {
+    display: flex;
+     
+}
