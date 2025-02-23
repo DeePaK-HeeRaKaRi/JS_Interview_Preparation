@@ -28,9 +28,9 @@
 const MultipleCheckbox = document.getElementById('MultipleCheckbox')
 const accordion = document.querySelector('.accordion');
 accordion.addEventListener('click',(event) => {
-  if(MultipleCheckbox.checked) {
-    MultipleCheckbox.checked = false
-  }
+  // if(MultipleCheckbox.checked) {
+  //   MultipleCheckbox.checked = false
+  // }
   const clickedTitle = event.target.closest('.accordion-item-header')
 
   if(!clickedTitle) {

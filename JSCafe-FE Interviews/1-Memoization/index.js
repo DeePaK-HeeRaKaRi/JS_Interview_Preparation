@@ -18,7 +18,7 @@ const memoize=(fn) => {
             return cache[argsToKey]
         }else{
             console.log(`Computing the result ${argsToKey}`,args)
-            const result=fn.apply(this,args)
+            const result=fn.apply(this,[args])
             cache[argsToKey]=result
             return result
         }
@@ -28,7 +28,7 @@ const memoize=(fn) => {
 // // const addNums=(a,b,c)=>{
 // //     return a+b+c
 // // }
-const addNums=(...arr1)=>{
+const addNums=(arr1)=>{
     // console.log('arguments in addNums----',arr1)
    
     // console.log('arr1-',arr1)

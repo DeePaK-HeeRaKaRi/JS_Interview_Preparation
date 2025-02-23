@@ -26,7 +26,7 @@ const getCurrValue = (promiseType, res) => {
                 if(curr instanceof Set) {
                     throw new TypeError('Invalid type')
                 }else{
-                    if (typeof curr == promiseType) {
+                    if (typeof curr == promiseType && curr != null) {
                         prev = { ...prev, ...curr }
                         return prev
                     } else {
@@ -38,8 +38,7 @@ const getCurrValue = (promiseType, res) => {
         case 'array':
             result = res.reduce((prev, curr) => {
                 if (Array.isArray(curr)) {
-                    prev = [...prev, ...curr]
-                    return prev
+                    return prev.concat(curr);
                 } else {
                     throw new TypeError('Invalid type')
                 }
@@ -72,6 +71,8 @@ const promiseMerge = (...promises) => {
                     } else {
                         promises_type = typeof res[0]
                     }
+                    // promises_type = typeof res[0]
+                    // console.log({promises_type})
                 } else {
                     throw new TypeError('Invalid type')
                 }
@@ -93,13 +94,13 @@ const value = async (...args) => {
 
 // value(Promise.resolve(1), Promise.resolve(2),Promise.resolve(3),Promise.resolve(4))
 // value(Promise.resolve("devtools"), Promise.resolve(".tech"))
-// value(Promise.resolve([1, 2, 3]), Promise.resolve([4, 5, 6]), Promise.resolve([7, 8, 9]))
+value(Promise.resolve([1, 2, 3]), Promise.resolve([4, 5, 6]), Promise.resolve([7, 8, 9]))
 // value(Promise.resolve({ a: 1 }), Promise.resolve({ b: 2 }), Promise.resolve({ c: 3 }))
 // value(Promise.resolve(true), Promise.resolve(false), Promise.resolve(false))
 // value(Promise.resolve("devtools"), Promise.resolve(1))
 // value(Promise.resolve("devtools"), Promise.resolve([1, 2]))
 
-value(Promise.resolve(new Set()),Promise.resolve(new Set()))
+// value(Promise.resolve(new Set()),Promise.resolve(new Set()))
 // value()
 // value(Promise.resolve(1), Promise.resolve(false))
 

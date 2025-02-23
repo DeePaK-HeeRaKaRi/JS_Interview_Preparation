@@ -17,9 +17,13 @@ class FileExplorer {
     return icon
   }
 
-  getIcon(isFolder) {
-    return isFolder ? 'https://static.vecteezy.com/system/resources/previews/017/269/602/non_2x/add-folder-icon-free-vector.jpg' :
-    'https://cdn-icons-png.flaticon.com/512/3979/3979285.png  '
+  getIcon(type) {
+    let icons = {
+      'Folder' : 'https://static.vecteezy.com/system/resources/previews/017/269/602/non_2x/add-folder-icon-free-vector.jpg',
+      'File' : 'https://cdn-icons-png.flaticon.com/512/3979/3979285.png',
+      'Delete' : 'https://static-00.iconduck.com/assets.00/delete-icon-1858x2048-xhcz7dt7.png'
+    }
+    return icons[type] || ''
   }
 
   createFolder(data,parent) {
@@ -33,20 +37,65 @@ class FileExplorer {
   
    
     if(data.isFolder) {  // You can create both folder an icon
-      let iconFolder = this.getIcon(true)
-      let iconFile = this.getIcon(false)
+      let iconFolder = this.getIcon('Folder')
+      let iconFile = this.getIcon('File')
+      let iconDelete = this.getIcon('Delete')
       nodeName.appendChild(this.createIcon(iconFolder, `Folder`,data.id))
       nodeName.appendChild(this.createIcon(iconFile, `File`,data.id))
+      nodeName.appendChild(this.createIcon(iconDelete,'Delete',data.id))
       this.nodeCache.set(`${data.id}`,node)
       this.dataCache.set(`${data.id}`,data)
     }
     // nodeName.textContent = data.name
     node.appendChild(nodeName)
     data.children && data.children.map((currnode) => this.createFolder(currnode,node))
-    fragement.appendChild(node)
+    // fragement.appendChild(node)
   
-    return !parent ? fragement :parent.appendChild(fragement)
+    // return !parent ? fragement : parent.appendChild(fragement)
+    return parent ? parent.appendChild(node) : node;
   }
+
+  deleteHandler(targetParent, targetRef) {
+    if (!targetRef || !targetParent) return;
+
+    // Remove from DOM
+    targetParent.remove();
+
+    // Remove references from caches
+    this.nodeCache.delete(`${targetRef.id}`);
+    this.dataCache.delete(`${targetRef.id}`);
+
+    // Remove reference from parent's `children` array
+    function removeFromParentChildren(parent, id) {
+        if (!parent || !parent.children) return;
+        parent.children = parent.children.filter(child => child.id !== id);
+    }
+
+    // Recursively remove all child references from caches
+    function removeChildReferences(dataCache, nodeCache, data) {
+        if (!data || !data.children) return;
+
+        data.children.forEach(child => {
+            nodeCache.delete(`${child.id}`);
+            dataCache.delete(`${child.id}`);
+            removeChildReferences(dataCache, nodeCache, child); // Recursive call
+        });
+    }
+
+    removeChildReferences(this.dataCache, this.nodeCache, targetRef);
+    
+    // Remove from the parent's children array
+    this.dataCache.forEach(parentData => removeFromParentChildren(parentData, targetRef.id));
+
+    console.log("After Deletion:", this.dataCache);
+
+    /*
+      Removes the node from the DOM properly.
+     Clears references from nodeCache and dataCache to avoid memory leaks.
+     Recursively deletes all child references, ensuring complete cleanup.
+     Removes the reference from the parent’s children array, maintaining a valid tree structures
+    */
+}
 
   addListener(container) {
     container.addEventListener('click',(event) => {
@@ -60,17 +109,25 @@ class FileExplorer {
       if(tagName === 'img' && targetId) {
         console.log('node Cahche',this.nodeCache.get(targetId))
         console.log('data ref cache',this.dataCache.get(targetId))
-        const target_parent = this.nodeCache.get(targetId)
-        const target_ref = this.dataCache.get(targetId)
+        let target_parent = this.nodeCache.get(targetId)
+        let target_ref = this.dataCache.get(targetId)
         console.log({target_ref})
-        const span = target_parent.getElementsByTagName('span')[0]
+        if(targetType == 'Delete') {
+          this.deleteHandler(target_parent,target_ref)
+          // target_parent.replaceChildren()
+        }
 
-        const get_input = this.createInput(targetType)
-        get_input.addEventListener('change',(e) => this.handleChange(e))
-        get_input.addEventListener('blur',(e) => this.handleBlur(e,target_parent,target_ref,targetType))
+        else {
+          const span = target_parent.getElementsByTagName('span')[0]
 
-        target_parent.insertBefore(get_input, span.nextElementSibling)
+          const get_input = this.createInput(targetType)
+          get_input.addEventListener('change',(e) => this.handleChange(e))
+          get_input.addEventListener('blur',(e) => this.handleBlur(e,target_parent,target_ref,targetType))
 
+          target_parent.insertBefore(get_input, span.nextElementSibling)
+
+        }
+        
         // target_parent.appendChild(get_input)
       }
       else{
@@ -81,7 +138,7 @@ class FileExplorer {
 
   handleChange(e) {
     console.log('-----input',e.target.value)
-    const value = e.targte.value
+    const value = e.target.value
   }
 
   handleBlur(e, parent_node, data_ref,type) {
@@ -90,6 +147,13 @@ class FileExplorer {
 
     const value = e.target.value.trim();
     if (!value) return; // Ignore empty input
+
+    // Check for duplicate names
+    if (data_ref.children.some(child => child.name === value)) {
+      alert("A file/folder with this name already exists!");
+      e.target.remove();
+      return;
+  }
 
     // Create new file/folder data
     let newData = {
@@ -122,8 +186,6 @@ class FileExplorer {
     // Remove input box after adding new node
     
 }
-
-
 
   createInput(type) {
     const input = document.createElement('input')

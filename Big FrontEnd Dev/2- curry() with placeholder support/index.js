@@ -43,6 +43,7 @@
 // }
 
 const curry = (fn) => {
+    console.log({fn},fn.length)
     const curried = (...args) => {
         if (args.length >= fn.length && args.every((arg) => arg !== curry.placeholder)) {
             return fn(...args.slice(0, fn.length));
@@ -94,7 +95,7 @@ const join = (a, b, c) => {
 
 //  console.log(curriedJoin(_, 2)(1, 3)) // '1_2_3'
 
- console.log(curriedJoin(_, _, _)(1)(_, 3)(2)) // '1_2_3'
+ console.log(curriedJoin(_, _, _)(_,1)(_, 3)(2)) // '1_2_3'
 
 //  console.log(curriedJoin(_,_,3,4)(1,_)(2,5))
 
@@ -102,7 +103,7 @@ const join = (a, b, c) => {
 
 //  console.log(curriedJoin(1,2)(3),curriedJoin(4)) //'1_2_4'
 
-const curried = curry(join)(1, 2);
-console.log("-----------", curried(3)); // '1_2_3'
-console.log(curried(4));
+// const curried = curry(join)(1, 2);
+// console.log("-----------", curried(3)); // '1_2_3'
+// console.log(curried(4));
  

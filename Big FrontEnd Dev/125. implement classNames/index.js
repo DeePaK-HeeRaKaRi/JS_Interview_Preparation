@@ -1,5 +1,5 @@
 function classNames(...args) {
-    // console.log(args)
+    console.log(args)
     function  flatten(arr) {
         let result = ''
         for(let element of arr){

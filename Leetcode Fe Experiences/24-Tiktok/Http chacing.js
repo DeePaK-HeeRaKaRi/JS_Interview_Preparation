@@ -19,4 +19,15 @@ Performance is a concern, and precision isn't critical.
 Resources are static or change predictably over time.
 
 
+Summary of Who Sends What
+====================================================================================
+Header	          | Sent       |   ByPurpose
+====================================================================================
+ETag	            Server	    Unique identifier for resource version
+Last-Modified	    Server	    Timestamp of last modification
+If-None-Match	    Client	    Checks if resource changed using ETag
+If-Modified-Since	Client	    Checks if resource changed using timestamp
+
+ETag is a stronger validation mechanism (byte-level changes).
+Last-Modified is weaker (only checks timestamp, not content).
 */

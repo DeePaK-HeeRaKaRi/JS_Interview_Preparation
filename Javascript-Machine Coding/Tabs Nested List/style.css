@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Main Tabs */
+.main-tabs {
+    display: flex;
+    border-bottom: 2px solid #007bff;
+    padding: 5px;
+    background: #f8f8f8;
+}
+
+.main-tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    background: #ddd;
+    border-right: 1px solid #ccc;
+    position: relative;
+}
+
+.main-tab:hover {
+    background: #bbb;
+}
+
+/* Sub-tabs - Initially hidden */
+.sub-tabs {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    width: 200px;
+    padding: 5px;
+}
+
+/* Nested Tabs */
+.tab {
+    padding: 5px 10px;
+    cursor: pointer;
+    background: #eee;
+    position: relative;
+    border-left: 2px solid #007bff;
+    margin-left: 10px;
+}
+
+.tab:hover {
+    background: #ddd;
+}
+
+/* Show children on hover */
+.tab-container:hover > .sub-tabs {
+    display: flex;
+}

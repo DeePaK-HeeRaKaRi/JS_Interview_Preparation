@@ -1,0 +1,28 @@
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    border: 1px solid black;
+}
+
+.tabs-list {
+    display: flex;
+    justify-content: space-around;
+    /* padding: 15px; */
+}
+
+.tabs-list .tab {
+    padding: 10px;
+    border: 1px solid black;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.active-tab {
+    background-color: bisque;
+}

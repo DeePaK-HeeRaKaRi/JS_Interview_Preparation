@@ -66,10 +66,10 @@ function stringToObject(input, finalValue) {
 console.log(stringToObject('a.b.c', 1));
 // { a: { b: { c: 1 } } }
 
-console.log(stringToObject('', 1));
+// console.log(stringToObject('', 1));
 // throw a TypeError
 
-console.log(stringToObject('a."b.c"."d.e"', 2));
+// console.log(stringToObject('a."b.c"."d.e"', 2));
 // consider "b.c" and "d.e" as individual keys
 // output => { a: { 'b.c': { 'd.e': 2 } } }
 
