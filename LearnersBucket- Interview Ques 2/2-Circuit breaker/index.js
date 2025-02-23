@@ -52,14 +52,7 @@ c();
 
 c();
 c();
-c();
-c();
-c();
-c();
-c();
-c();
-c();
-c();
+
 // Now try after 3000ms 
 setTimeout(() => {
   console.log(c());

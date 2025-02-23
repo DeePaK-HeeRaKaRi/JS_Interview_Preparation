@@ -11,6 +11,7 @@ const getFlattenArrayResults = (obj) => {
       }
     }
   }
+  // console.log({finalArr})
   return finalArr;
 };
 
@@ -24,7 +25,8 @@ const FlattenArray = (arr) => {
         obj[arrLen] = { 0: flatChild };  //if the Nested Array with same length ex {3 : {0 :{},1:{}}}
       } else {
         let keysLen = Object.keys(obj[arrLen]).length;  // Here increase the keys Length
-        obj[arrLen][keysLen] = flatChild;
+        obj[arrLen][keysLen] = flatChild;  // {2: {0:[10,20,30],1:[100,200,300,400]}}
+        // console.log('=========,',obj[arrLen])  //
       }
     } else {
       if (!obj[0]) {  
@@ -34,11 +36,73 @@ const FlattenArray = (arr) => {
       }
     }
   });
-  const getFinalArray = getFlattenArrayResults(obj);
-  return getFinalArray;
+  // console.log({obj},JSON.stringify(obj))
+  // const getFinalArray = getFlattenArrayResults(obj);
+  return obj;
 };
 
-const arr = [
+/*
+{
+    "0": [
+        1,
+        2,
+        6
+    ],
+    "1": {
+        "0": {
+            "0": [
+                7
+            ]
+        }
+    },
+    "2": {
+        "0": {
+            "0": [
+                10
+            ],
+            "2": {
+                "0": {
+                    "0": [
+                        20,
+                        30
+                    ]
+                }
+            }
+        },
+        "1": {
+            "0": [
+                100
+            ],
+            "3": {
+                "0": {
+                    "0": [
+                        200,
+                        300,
+                        400
+                    ]
+                }
+            }
+        }
+    },
+    "3": {
+        "0": {
+            "0": [
+                3,
+                5
+            ],
+            "1": {
+                "0": {
+                    "0": [
+                        4
+                    ]
+                }
+            }
+        }
+    }
+}
+
+*/
+let arr = [
   1,
   2,
   [3, [4, 10, [90, 100], [900, 999]], 5],
@@ -46,9 +110,11 @@ const arr = [
   6,
   [7],
   [10],
-];
-// const arr = [1, 2, [3, [4], 5], 6, [7]];
-const res = FlattenArray(arr);
+];  //[1, 2, 6, 7, 10, 3, 5, 4, 10, 90, 100, 900, 999, 100, 200, 300]
+ arr = [[10,[20,30]],1, 2,0,[100,[200,300,400]], [3, [4], 5], 6, [7]];
+ let getFaltenObj_size = FlattenArray(arr)
+ console.log({getFaltenObj_size},JSON.stringify(getFaltenObj_size))
+const res = getFlattenArrayResults(getFaltenObj_size);
 console.log("Final Array", res);
  
  

@@ -11,8 +11,9 @@ function createInstance(className, ...args) {
   // console.log("--args", args);
 
   // Create an object with the prototype of the class
+  //className.prototype is not a constructor. Instead, it is the prototype object where shared methods (like sayHello) reside.
   let instance = Object.create(className.prototype);
-
+  console.log({instance},'-------',className)
   // Call the constructor function with the provided arguments
   className.apply(instance, args);
 
