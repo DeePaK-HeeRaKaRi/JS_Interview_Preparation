@@ -11,7 +11,7 @@ const obj = {
   },
 };
 const res = obj + 10; // Calls obj.valueOf() to get the numeric value
-console.log(obj.valueOf(), res);
+console.log('--------val',obj.valueOf(), res);
 
 let a = {
   value: 1,

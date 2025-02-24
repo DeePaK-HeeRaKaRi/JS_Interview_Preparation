@@ -18,13 +18,14 @@ const mul = (a, b, c, d) => a * b * c * d
  
 const perpetualCurry = (fn) => {
     const arity = fn.length; // Get the arity of the function
-    console.log('------',arity)
+    console.log('------',arity,fn)
     let args = [];
 
     const inner = (...newArgs) => {
         args = [...args, ...newArgs];
         if (args.length >= arity) { // Check if enough arguments have been collected
-            const result = fn(...args.slice(0, arity)); // Call the function with the collected arguments
+            // const result = fn(...args.slice(0, arity)); // Call the function with the collected arguments
+            const result = fn.apply(this,[...args])
             args = []; // Reset args for next curry
             return result;
         } else {
@@ -37,7 +38,7 @@ const perpetualCurry = (fn) => {
 
 const multplyC = perpetualCurry(mul)
 const addC = perpetualCurry(add)
-console.log('--------',addC(1,10)(2)(3))
+console.log('--------',addC(1,10)(2))
 console.log(multplyC(1)(2)(3)(4))
 
 

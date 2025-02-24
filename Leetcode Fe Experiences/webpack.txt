@@ -1,7 +1,8 @@
 The Webpack dependency graph is a core concept in Webpack's module bundling system. Here’s an overview of how it works and why it’s critical:
 
 What Is a Dependency Graph?
-In Webpack, a dependency graph is a representation of all the modules your application needs, organized based on their dependencies. Each module in the graph is a node, and edges represent the relationships or dependencies between them.
+In Webpack, a dependency graph is a representation of all the modules your application needs, organized based on their dependencies. 
+Each module in the graph is a node, and edges represent the relationships or dependencies between them.
 
 Entry Point: Webpack starts from a specified entry point, typically a JavaScript file, like index.js, and begins to analyze the dependencies.
 
@@ -36,3 +37,26 @@ Edges:
     An edge goes from index.js to utils.js (indicating index.js depends on utils.js).
     An edge goes from index.js to api.js.
     Another edge goes from api.js to http.js.
+
+
+
+High-Level Overview of Webpack in React
+What is Webpack?
+
+Webpack is a module bundler for JavaScript applications.
+It processes and bundles JavaScript, CSS, images, and other assets into optimized files.
+Does Webpack Come by Default in React?
+
+Yes, Create React App (CRA) includes Webpack by default for bundling and optimization.
+If using Vite instead of CRA, Webpack is not used (Vite uses ESBuild).
+Key Features of Webpack in React:
+
+Tree Shaking – Removes unused code to reduce bundle size.
+Code Splitting – Splits code into smaller chunks for better performance.
+Loaders – Processes files like JS, CSS, images, and converts them into valid modules.
+Plugins – Extend functionality (e.g., minification, environment variables).
+React-Specific Optimizations in Webpack:
+
+Lazy Loading – Uses React.lazy() + Suspense for dynamic imports.
+Production Optimizations – Minifies JS, removes dead code, and optimizes assets.
+HMR (Hot Module Replacement) – Enables fast updates during development.

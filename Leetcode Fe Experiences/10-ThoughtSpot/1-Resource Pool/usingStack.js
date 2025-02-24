@@ -56,7 +56,7 @@ class ResourcePool {
         }
         
         // const get_available_resource = this.availableResource.shift()
-
+        console.log('Available Resource',[...this.availableResource])
         const get_available_resource = [...this.availableResource][0];  // O(1) to get an available resource
         this.availableResource.delete(get_available_resource);  // O(1) to remove from Set
         const resource = this.pool[get_available_resource]

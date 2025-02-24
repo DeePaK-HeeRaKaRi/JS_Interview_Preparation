@@ -1,11 +1,3 @@
-
-// 📌 Difference between 
-//  👉Display:none
-//  👉visibility:hidden
-//  👉opacity:0
-
-// https://www.freecodecamp.org/news/css-display-none-and-visibility-hidden-the-difference/#:~:text=display%3Anone%20turns%20off%20the,can%20still%20interact%20with%20them.
-
 /*
 
 display: none

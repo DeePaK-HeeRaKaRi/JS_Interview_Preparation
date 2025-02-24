@@ -23,7 +23,7 @@ function fetchApi(timer){
     })
 }
 
-const timer =100
+const timer =30
 fetchApi(timer)
 
 
