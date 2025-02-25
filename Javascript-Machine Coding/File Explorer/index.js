@@ -27,7 +27,6 @@ class FileExplorer {
   }
 
   createFolder(data,parent) {
-    const fragement = document.createDocumentFragment()
   
     const node = document.createElement('div')
     node.classList.add('node-container',`node-${data.name}`)

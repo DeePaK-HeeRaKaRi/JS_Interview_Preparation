@@ -88,7 +88,7 @@ class TicTacToe{
         const currentCell = document.getElementById(`col_${i}_${j}`)
         const isInnerTextPresent = currentCell.innerText
         console.log(currentCell , isInnerTextPresent)
-        if(isInnerTextPresent){
+        if(isInnerTextPresent && this.visitesCells[i][j]){
             window.alert('Please select another cell');
             currentCell.style.pointerEvents = 'none';
         }else{
@@ -143,11 +143,11 @@ class TicTacToe{
             return [true,getCurrentPlayer]
         }
         // Check diagonal from left to right
-        else if(this.checkLeftDiagonal(getCurrentPlayer)){
+        else if(i==j && this.checkLeftDiagonal(getCurrentPlayer)){
             return [true,getCurrentPlayer]
         }
         // check diagonal from right to left
-        else if(this.checkRightDiagonal(getCurrentPlayer)){
+        else if(i == j && this.checkRightDiagonal(getCurrentPlayer)){
             return [true,getCurrentPlayer]
         }
         else{
