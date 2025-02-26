@@ -77,7 +77,7 @@ writeFunction()
 
 // When this is present inside async method / callback [ setTimeout, setInterval]
 
-
+var value = 'deepak'
 const obj = {
     value : 42,
     regularMethod: function() {
@@ -94,13 +94,17 @@ const obj = {
         setTimeout(() => {
             console.log("Using arrow function",this) // refers to obj
         },1000)
+    },
+    arr1 :() => {
+        console.log('-------,,,',this, value)
     }
 }
 obj.regularMethod();
 
 obj.arrowFunction()
+obj.arr1()
 
-
+let a =  10
 let obj2 = {
     a: 1,
     printRegularFun: function() {
@@ -114,7 +118,7 @@ let obj2 = {
     printArrowFun: function(){
         console.log('this--------',this)
         // Now this refers to obj2
-        let innerPrint = ()=>{
+        let innerPrint = () => {
             console.log("Print Arrow Fun",this.a)
         }
         innerPrint()
@@ -123,3 +127,24 @@ let obj2 = {
 
 obj2.printRegularFun();
 obj2.printArrowFun()
+
+
+const myObject = {
+    name: "Test",
+    getFunctionName: function () {
+      console.log(this.name);
+    },
+    getArrowFunctionName: () => {
+      console.log('--dds-',this.name);
+    },
+    updateArrowFunctionScope: function () {
+      const innerArrowFunction = () => {
+        console.log(this.name);
+      };
+      innerArrowFunction();
+    },
+  };
+  
+  myObject.getFunctionName();
+  myObject.getArrowFunctionName();
+  myObject.updateArrowFunctionScope();

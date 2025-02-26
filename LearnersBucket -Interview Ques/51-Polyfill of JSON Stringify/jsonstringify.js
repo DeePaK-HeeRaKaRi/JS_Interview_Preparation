@@ -10,7 +10,7 @@ class myJSON {
             case 'function':
             case 'undefined':
             case 'symbol':
-                return 'undefined';
+                return undefined;
             case 'bigint':
                 throw new TypeError("BigInt is not supported");
             case 'object':
@@ -18,11 +18,10 @@ class myJSON {
                 if (val instanceof Date) return `"${val.toISOString()}"`;
                 if (val instanceof String || val instanceof Boolean) return `"${val}"`;
                 if (val instanceof Number) return isFinite(val) ? `${val}` : "null";
-                if (Array.isArray(val)) return `[${val.map((v) => this.value(v)).join(",")}]`;
+                if (Array.isArray(val)) return `[${val.map((v) => this.value(v) ?? null).join(",")}]`;
                 return this.myStringify(val);
         }
     }
-
     static myStringify(obj) {
         if (typeof obj !== "object" || obj === null) return this.value(obj);
         obj = this.removeCycle(obj);
@@ -31,26 +30,22 @@ class myJSON {
             .filter((key) => typeof obj[key] !== "function" && obj[key] !== undefined)
             .map((key) => `"${key}":${this.value(obj[key])}`)
             .join(",");
-
         return `{${objString}}`;
     }
-
     static removeCycle(obj) {
         let visited = new WeakMap();
-        const iterate = (obj) => {
-            for (let key in obj) {
-                if (obj.hasOwnProperty(key) && typeof obj[key] === 'object' && obj[key] !== null) {
-                    if (visited.has(obj[key])) {
-                        obj[key] = "[Circular]";
-                    } else {
-                        visited.set(obj[key], true);
-                        iterate(obj[key]);
-                    }
+        const iterate = (currentObj) => {
+            if (typeof currentObj !== "object" || currentObj === null) return currentObj;
+            if (visited.has(currentObj)) return "[Circular]";
+            let copy = Array.isArray(currentObj) ? [] : {}; // Preserve arrays
+            visited.set(currentObj, copy);
+            for (let key in currentObj) {
+                if (currentObj.hasOwnProperty(key)) {
+                    copy[key] = iterate(currentObj[key]);
                 }
             }
-        };
-        iterate(obj);
-        return obj;
+            return copy;
+        };return iterate(obj);
     }
 }
 let obj={

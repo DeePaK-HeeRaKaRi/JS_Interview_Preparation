@@ -208,116 +208,63 @@ function asyncTask(message, delay, shouldReject = false) {
 }
 
 // Simulating jumbled usage of then, catch, and finally with multiple steps
-asyncTask("Order processing", 1000)
-  .then((result) => {
-      console.log(result);  // Order processing succeeded!
-      return asyncTask("Payment processing", 2000);
-  })
-  .catch((error) => {
-      console.error("Error during order processing:", error);  // Not executed unless the first task fails
-      return "Recovered from order processing error.";
-  })
-  .then((result) => {
-      console.log(result);  // Payment processing succeeded!
-      return asyncTask("Shipment processing", 1500);
-  })
-  .finally(() => {
-      console.log("Cleaning up after order processing...");  // Always executed after any task
-  })
-  .then((result) => {
-      console.log(result);  // Shipment processing succeeded!
-      return asyncTask("Notification sending", 500);
-  })
-  .catch((error) => {
-      console.error("Error during shipment processing:", error);  // Not executed unless shipment task fails
-  })
-  .finally(() => {
-      console.log("Cleaning up after shipment...");  // Always executed after shipment task
-  })
-  .then((result) => {
-      console.log(result);  // Notification sending succeeded!
-      return asyncTask("Final confirmation", 1000, true);  // This will fail
-  })
-  .catch((error) => {
-      console.error("Error during final confirmation:", error);  // Final confirmation failed
-  })
-  .finally(() => {
-      console.log("Final cleanup after confirmation...");  // Always executed after final confirmation task
-  })
-  .then(() => {
-      console.log("Order process completed!");
-  })
-  .catch((error) => {
-      console.error("Order process failed:", error);  // Catch final error if any
-  })
-  .finally(() => {
-      console.log("Global cleanup after entire process...");  // Always executed after everything
-  });
+// asyncTask("Order processing", 1000)
+//   .then((result) => {
+//       console.log(result);  // Order processing succeeded!
+//       return asyncTask("Payment processing", 2000);
+//   })
+//   .catch((error) => {
+//       console.error("Error during order processing:", error);  // Not executed unless the first task fails
+//       return "Recovered from order processing error.";
+//   })
+//   .then((result) => {
+//       console.log(result);  // Payment processing succeeded!
+//       return asyncTask("Shipment processing", 1500);
+//   })
+//   .finally(() => {
+//       console.log("Cleaning up after order processing...");  // Always executed after any task
+//   })
+//   .then((result) => {
+//       console.log(result);  // Shipment processing succeeded!
+//       return asyncTask("Notification sending", 500);
+//   })
+//   .catch((error) => {
+//       console.error("Error during shipment processing:", error);  // Not executed unless shipment task fails
+//   })
+//   .finally(() => {
+//       console.log("Cleaning up after shipment...");  // Always executed after shipment task
+//   })
+//   .then((result) => {
+//       console.log(result);  // Notification sending succeeded!
+//       return asyncTask("Final confirmation", 1000, true);  // This will fail
+//   })
+//   .catch((error) => {
+//       console.error("Error during final confirmation:", error);  // Final confirmation failed
+//   })
+//   .finally(() => {
+//       console.log("Final cleanup after confirmation...");  // Always executed after final confirmation task
+//   })
+//   .then(() => {
+//       console.log("Order process completed!");
+//   })
+//   .catch((error) => {
+//       console.error("Order process failed:", error);  // Catch final error if any
+//   })
+//   .finally(() => {
+//       console.log("Global cleanup after entire process...");  // Always executed after everything
+//   });
 
+// ✅ Test Cases (Basic Promises)
+console.log("Start");
 
-// Example usage of MyPromise with createOrder and proceedToPayment functions
-// let cart = ["shoes", "kurtha", "pant"];
+MyPromise.resolve(10)
+  .then(val => val * 2)
+  .then(console.log); // Expected: 20
 
-// function createOrder(cart) {
-//     const pr = new MyPromise(function (resolve, reject) {
-//         console.log("validate", !validCart(cart));
-//         if (!validCart(cart)) {
-//             const err = new Error("Cart is not valid");
-//             reject(err);  // Reject if the cart is not valid
-//         }
-//         const orderid = "12345";
-//         if (orderid) {
-//             setTimeout(() => {
-//                 resolve(orderid);  // Resolve with the order ID after a delay
-//             }, 2000);
-//         } else {
-//             reject(new Error("Order is not valid"));  // Reject if the order ID is invalid
-//         }
-//     });
-//     return pr;
-// }
+MyPromise.reject("Error")
+  .catch(console.error); // Expected: "Error"
 
-// function validCart(cart) {
-//     return false;  // Simulating a validation failure
-// }
+new MyPromise(resolve => setTimeout(() => resolve("Async Success"), 100))
+  .then(console.log); // Expected after 100ms: "Async Success"
 
-// function proceedToPayment(orderId) {
-//     return new MyPromise(function (resolve, reject) {
-//         if (!validCart("fhhfdf")) {
-//             reject(new Error("No Payment"));  // Reject if cart validation fails
-//         } else {
-//             resolve("Your Payment was Sucessfull");  // Resolve if payment is successful
-//         }
-//     });
-// }
-
-// // Chaining promises with then/catch/finally
-// createOrder(cart)
-//     .then(function (orderId) {
-//         console.log("orderid------", orderId);
-//         return orderId;
-//     })
-//     .catch(function (err) {
-//         console.log("ordeer-------", err.message);
-//     })
-//     .then(function (orderId) {
-//         return proceedToPayment(orderId);  // Proceed to payment if order creation succeeds
-//     })
-//     .then(function (paymentInfo) {
-//         console.log("payment Info ->", paymentInfo);
-//         return paymentInfo;
-//     })
-//     .catch(function (err) {
-//         console.log(err.message);  // Catch any errors in the process
-//     })
-//     .then(function (paymentDetails) {
-//         console.log("NO matter what happens, i will definitely called", paymentDetails);
-//         return "okoko1";
-//     })
-//     .finally(() => {
-//         console.log("FInished----------------");
-//         return "okoko";  // 'finally' is always executed at the end
-//     })
-//     .then((dummy) => {
-//         console.log("after finished", dummy);
-//     });
+console.log("End");

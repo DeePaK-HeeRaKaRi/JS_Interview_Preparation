@@ -3,18 +3,15 @@ const STATE = {
   PENDING: 'pending',
   REJECTED: 'rejected'
 };
-
 class MyPromise {
   // Private fields for maintaining state and callbacks
   #thenCbs = [];
   #catchCbs = [];
   #state = STATE.PENDING;
   #value;
-  
   // Bind success and failure methods for consistent `this`
   #onSuccessBinded = this.#onSuccess.bind(this);
   #onFailureBinded = this.#onFail.bind(this);
-
   constructor(cb) {
       try {
           // Execute the callback with the bound resolve and reject methods
@@ -24,9 +21,7 @@ class MyPromise {
           this.#onFail(e);
       }
   }
-
-  // Method to execute all stored callbacks based on the current state
-  #runCallbacks() {
+  #runCallbacks() { // Method to execute all stored callbacks based on the current state
       if (this.#state === STATE.FULFILLED) {
           // Execute all `then` callbacks with the resolved value
           this.#thenCbs.forEach(callback => callback(this.#value));
@@ -38,85 +33,62 @@ class MyPromise {
           this.#catchCbs = []; // Clear callbacks after execution
       }
   }
-
-  // Private method to handle successful resolution
-  #onSuccess(value) {
+  #onSuccess(value) { // Private method to handle successful resolution
       queueMicrotask(() => {
           if (this.#state !== STATE.PENDING) return; // Ignore if promise is already settled
           // inside of our success methids we have to handle both promise and values
-            // p.then(() => {
-                // return new Promise
-            //     return "hi"
-            // })
-            // .then(())
-            // so if it has a promise finish that promise
+            // p.then(() => // return new Promise return "hi" // })
+            // .then(()) // so if it has a promise finish that promise
           if (value instanceof MyPromise) {
               // If the value is another promise, chain it
               value.then(this.#onSuccessBinded, this.#onFailureBinded);
               return;
           }
-
           this.#value = value; // Store the resolved value
           this.#state = STATE.FULFILLED; // Update state to fulfilled
           this.#runCallbacks(); // Execute stored callbacks
       });
   }
-
-  // Private method to handle rejection
-  #onFail(value) {
+  #onFail(value) {  // Private method to handle rejection
       queueMicrotask(() => {
           if (this.#state !== STATE.PENDING) return; // Ignore if promise is already settled
-
           if (value instanceof MyPromise) {
               // If the value is another promise, chain it
               value.then(this.#onSuccessBinded, this.#onFailureBinded);
               return;
           }
-
           this.#value = value; // Store the rejection reason
           this.#state = STATE.REJECTED; // Update state to rejected
           this.#runCallbacks(); // Execute stored callbacks
       });
   }
-
-  // Method to add `then` callbacks for chaining
-  then(thenCb, catchCb) {
+  then(thenCb, catchCb) {  // Method to add `then` callbacks for chaining
       return new MyPromise((resolve, reject) => {
           this.#thenCbs.push(result => {
               if (!thenCb) {
                   resolve(result); // Pass value if no `then` callback is provided
                   return;
-              }
-              try {
+              }try {
                   resolve(thenCb(result)); // Resolve with the result of the callback
               } catch (error) {
                   reject(error); // Reject if callback throws an error
               }
           });
-
           this.#catchCbs.push(result => {
               if (!catchCb) {
                   reject(result); // Pass rejection reason if no `catch` callback is provided
                   return;
-              }
-              try {
+              }try {
                   resolve(catchCb(result)); // Resolve with the result of the catch callback
               } catch (error) {
                   reject(error); // Reject if callback throws an error
               }
           });
-
           this.#runCallbacks(); // Trigger callback execution
       });
-  }
-
-  // Method to add `catch` callbacks for handling rejections
-  catch(cb) {
+  }catch(cb) { // Method to add `catch` callbacks for handling rejections
       return this.then(undefined, cb); // Forward to `then` with undefined success callback
-  }
-
-  // Method to add `finally` callbacks for cleanup actions
-  finally(cb) {
+  }finally(cb) {  // Method to add `finally` callbacks for cleanup actions
       return this.then(
           result => {
               cb(); // Execute cleanup callback
@@ -128,14 +100,10 @@ class MyPromise {
           }
       );
   }
-
-  // Static method to resolve a value immediately
-  static resolve(value) {
+  static resolve(value) { // Static method to resolve a value immediately
       return new MyPromise(resolve => resolve(value));
   }
-
-  // Static method to reject a value immediately
-  static reject(value) {
+  static reject(value) {  // Static method to reject a value immediately
       return new MyPromise((_, reject) => reject(value));
   }
 }
@@ -152,7 +120,6 @@ function asyncTask(message, delay, shouldReject = false) {
       }, delay);
   });
 }
-
 // Demonstrating the usage of custom MyPromise
 asyncTask("Order processing", 1000)
   .then(result => {

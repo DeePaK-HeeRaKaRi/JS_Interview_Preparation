@@ -22,6 +22,34 @@ const debounce=(fn,delay,flag)=>{
         }
     }
 }
+
+const debounce_ = (fn,delay,options = {leading : false, trailing: true}) => {
+    let timer
+    let isLeadingInvoked = false
+    return function(...args){
+        const context = this
+        // for trailing case
+        if(timer) {
+            clearTimeout(timer)
+        }
+
+        if(options.leading && !timer) {
+            fn.apply(context,[...args])
+            isLeadingInvoked = true
+        }
+        else {
+            isLeadingInvoked = false
+        }
+
+        timer = setTimeout(() => {
+            if(options.trailing && !isLeadingInvoked) {
+                fn.apply(context,[...args])
+            }
+
+            timer = null // for precations
+        },delay)
+    }
+}
 // const betterFunction=debounce(incrementCount,500,false)
 
 

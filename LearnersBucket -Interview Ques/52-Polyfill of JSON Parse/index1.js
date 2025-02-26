@@ -9,11 +9,7 @@ class myJSON {
       case "true":
         return true;
       case "false":
-        return false;
-      case "{}":
-        return {};
-      case "[]":
-        return [];
+        return false;case "{}":return {};case "[]":return [];
       default:
         if (+string === +string) {
           return Number(string);
@@ -24,14 +20,11 @@ class myJSON {
           return string.substring(1, string.length - 1);
         } else {
           const innerString = string.slice(1, -1);
-
           const substrings = this.splitByComma(innerString);
-
           if (string[0] === '[') {
             return substrings.map(resp => this.myParse(resp));
           } 
           else if (string[0] === '{') {
-            console.log(substrings);
             return substrings.reduce((prev, curr) => {
               if (curr.indexOf(':') > -1) {
                 const index = curr.indexOf(':');
@@ -45,10 +38,8 @@ class myJSON {
         }
     }
   }
-
   static splitByComma(string){
     // "a:1,b:2,c:{d:4}"
-    console.log("string", string);
     let l=0
     let r=0
     let curly = 0
@@ -56,7 +47,6 @@ class myJSON {
     let allStrs=[]
     while(r<=string.length){
         const curString = string[r]
-
         if(curString === '['){
             sqr++
         }
@@ -81,6 +71,7 @@ class myJSON {
   }
 }
 
-var p='{"a":1,"b":2}'
-// p='[1,2,3,4,[5,6]]'
+var p='{"a":1,"b":2,"C":{"D":"deepak","e":"Kumar"}}'
+p='[1,2,3,4,[5,6]]'
+// p='{"deep":"heer","a":{"c":90,"d":98}}'
 console.log(myJSON.myParse(p))

@@ -51,9 +51,7 @@ class myJSON {
                 const index = item.indexOf(":");
                 const thisKey = item.substring(0, index);
                 const thisValue = item.substring(index + 1);
-                console.log("thisKey, thisValue", thisKey, thisValue);
                 acc[this.myParse(thisKey)] = this.myParse(thisValue);
-                console.log("acc----", acc);
               }
               return acc;
             }, {});
@@ -82,7 +80,6 @@ class myJSON {
       if (rChar === "}") {
         lcur--;
       }
-
       if ((rChar === "," && lPar === 0 && lcur === 0) || r === str.length) {
         const truncStr = str.substring(l, r);
         allStrs.push(truncStr);
@@ -102,6 +99,7 @@ var p = '[1,2,3,"deepak",[4,5],7,9]';
 // p = '[1,2,3,"deepak"]';
 // p='{"deep":"heerakari","a":989,"c":{"d":89,"e":50,"F":{"g":90,"h":100}}}'
 p='{"deep":"heer","a":{"c":90,"d":98}}'
+p='{"a":1,"b":2,"C":{"D":"deepak","e":"Kumar"}}'
 console.log(myJSON.myParse(p))
 // var t = JSON.parse('"deepak heeerakari"');
 // console.log(t,typeof t);
