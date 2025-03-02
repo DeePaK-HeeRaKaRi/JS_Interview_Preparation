@@ -9,15 +9,12 @@ function Animal(name) {
   };
   
   // Child class
+  //When Animal.call(this, name); is executed inside Dog, it assigns this.name = name to the Dog instance.
   function Dog(name, breed) {
     Animal.call(this, name);  // Call the parent constructor
     this.breed = breed;
   }
   
-
-
-
-
 
   // Inherit from Animal
 

@@ -1,6 +1,7 @@
 function getRow(row) {
     let currCol = 1
     let currRow = [currCol]
+    // Ncr formula > 5 > 5/1 > 5/1*4/2 > 5/1*4/2*3/3
     for(let i=1;i<row;i++) {
         currCol = currCol * (row-i)
         currCol = Math.floor(currCol / i)

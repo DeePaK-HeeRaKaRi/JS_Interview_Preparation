@@ -117,6 +117,9 @@ class LRU_Map {
     }
 
     set(key,value) {
+        if(this.cache.has(key)) {
+            this.cache.delete(key)
+        }
         if(this.cache.size >= this.cacheMaxSize) {
             //The key at the start of the cache is the "least recently used" and is the first candidate for eviction when the cache size exceeds the limit.
             const oldestKey = this.cache.keys().next().value

@@ -23,11 +23,26 @@ const pipe=(...funs)=>{
         return val
     }
 }
+
+const pipe_reduce = (...fns) => {
+    return function(val){
+        return fns.reduce((val,fn) => fn(val),val)
+    }
+}
 const getSalary = (person) => person.salary;
 const addBonus = (netSalary) => netSalary + 1000;
 const deductTax = (grossSalary) => grossSalary * 2;
 
-const result = pipe(getSalary, addBonus, deductTax)({ salary: 10000 });
+// const result = pipe(getSalary, addBonus, deductTax)({ salary: 10000 });
 // const result1 = pipe_1(getSalary, addBonus, deductTax)({ salary: 10000 },1000,1000);
+
+const compose = (...fns) => {
+    return function (x) {
+    return fns.reduceRight((v, f) => f(v), x);
+    // You can reverse fn array and use reduce
+    };
+   };
+   
+const result = pipe_reduce(getSalary, addBonus, deductTax)({ salary: 10000 });
 console.log(result)
 // console.log(result1);
