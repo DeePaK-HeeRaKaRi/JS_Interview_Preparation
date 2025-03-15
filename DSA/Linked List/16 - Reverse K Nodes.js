@@ -55,7 +55,7 @@ function reverseKNodes(head,k) {
         prev = curr_node
         curr_node = next_node
     }
-
+    //3>2>1[1 is head] / 6>5>4 [now 4 is head]
     head.next = reverseKNodes(curr_node,k)
     return prev
 }

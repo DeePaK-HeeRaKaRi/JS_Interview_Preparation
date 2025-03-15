@@ -1,7 +1,8 @@
 /*
 
 
-HTTP caching is a mechanism that allows browsers or intermediaries (like CDNs) to store copies of responses and serve them instead of making a full server request. This improves performance by reducing latency, bandwidth usage, and server load. Key headers involved in HTTP caching are:
+HTTP caching is a mechanism that allows browsers or intermediaries (like CDNs) to store copies of responses and serve them instead of making a full server request.
+ This improves performance by reducing latency, bandwidth usage, and server load. Key headers involved in HTTP caching are:
 
 Cache-Control: Specifies caching directives (e.g., no-cache, max-age, public, private).
 Expires: Sets an expiration date and time for a cached response.

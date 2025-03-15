@@ -9,15 +9,15 @@ function celebrity(mat) {
         for(let j=0;j<m;j++) {
            
             if(i!=j && mat[i][j] == 1) {
-                non_celebrity_list[j]+=1
-                celebrityList[i]+=1
+                non_celebrity_list[i]+=1
+                celebrityList[j]+=1
             }
         }
     }
     // console.log({celebrityList, non_celebrity_list})
 
     for(let i=0;i<n;i++) {
-        if(celebrityList[i] == 0 && non_celebrity_list[i] === n - 1) {
+        if(celebrityList[i] == n-1 && non_celebrity_list[i] === 0) {
             return i
         }
     }

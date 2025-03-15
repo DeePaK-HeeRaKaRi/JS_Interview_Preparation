@@ -52,7 +52,7 @@ var longestOnes3 = function(nums, k) {
         if(nums[r]==0){
             zeros++
         }
-        if(zeros>k){
+        while(zeros>k){
             if(nums[l] == 0) {
                 zeros--
             }

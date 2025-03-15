@@ -23,6 +23,7 @@ const debounce=(fn,delay,flag)=>{
     }
 }
 
+// Leading function will invike immediately , trailing will behave as clasic debounce
 const debounce_ = (fn,delay,options = {leading : false, trailing: true}) => {
     let timer
     let isLeadingInvoked = false

@@ -53,6 +53,7 @@ const getCurrValue = (promiseType, res) => {
                     throw new TypeError('Invalid type')
                 }
             }, true)
+            return result
         default:
             return result
 
@@ -60,6 +61,7 @@ const getCurrValue = (promiseType, res) => {
 }
 
 const promiseMerge = (...promises) => {
+    console.log({promises})
     return new Promise((resolve, reject) => {
         let promises_type = null
         return Promise.all(promises)
@@ -98,7 +100,7 @@ value(Promise.resolve([1, 2, 3]), Promise.resolve([4, 5, 6]), Promise.resolve([7
 // value(Promise.resolve({ a: 1 }), Promise.resolve({ b: 2 }), Promise.resolve({ c: 3 }))
 // value(Promise.resolve(true), Promise.resolve(false), Promise.resolve(false))
 // value(Promise.resolve("devtools"), Promise.resolve(1))
-// value(Promise.resolve("devtools"), Promise.resolve([1, 2]))
+value(Promise.resolve("devtools"), Promise.resolve([1, 2]))
 
 // value(Promise.resolve(new Set()),Promise.resolve(new Set()))
 // value()

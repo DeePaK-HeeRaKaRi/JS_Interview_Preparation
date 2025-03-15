@@ -108,6 +108,7 @@ let a =  10
 let obj2 = {
     a: 1,
     printRegularFun: function() {
+        console.log("print regular",this)
         function innerPrint() {
             // Here this refers to global scope
             console.log("Inner Print Fun: ", this.a);
@@ -116,7 +117,7 @@ let obj2 = {
     },
 
     printArrowFun: function(){
-        console.log('this--------',this)
+        console.log('print arow--------',this)
         // Now this refers to obj2
         let innerPrint = () => {
             console.log("Print Arrow Fun",this.a)
