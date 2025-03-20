@@ -112,6 +112,7 @@ let arr = [
   [10],
 ];  //[1, 2, 6, 7, 10, 3, 5, 4, 10, 90, 100, 900, 999, 100, 200, 300]
  arr = [[10,[20,30]],1, 2,0,[100,[200,300,400]], [3, [4], 5], 6, [7]];
+ arr = [1,2,3,[[7,8,9]]]
  let getFaltenObj_size = FlattenArray(arr)
  console.log({getFaltenObj_size},JSON.stringify(getFaltenObj_size))
 const res = getFlattenArrayResults(getFaltenObj_size);

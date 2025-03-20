@@ -60,7 +60,7 @@ function reverseKNodes(head,k) {
     return prev
 }
 let arr = [1,2,3,4,5,6,7,8,9,10]
-let k = 1
+let k = 3
 let input = getHead(arr)
 // console.log({input})
 let res=   reverseKNodes(input,k)

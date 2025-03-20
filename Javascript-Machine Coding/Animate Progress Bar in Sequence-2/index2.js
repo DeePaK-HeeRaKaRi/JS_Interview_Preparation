@@ -90,7 +90,7 @@ class ProgressBars {
 
         setTimeout(() => {
             requestAnimationFrame(() => this.animateProgressBar(inner, percentageText, progress + 1));
-        }, 300); // Adjust speed of increment (30ms per step)
+        }, 200); // Adjust speed of increment (30ms per step)
     }
 }
 

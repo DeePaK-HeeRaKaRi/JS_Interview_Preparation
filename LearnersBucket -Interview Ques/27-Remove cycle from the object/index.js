@@ -1,5 +1,5 @@
 
-
+//Objects in a WeakSet get automatically removed when they are no longer needed, avoiding unnecessary memory usage.
 function removeCycles(obj,set = new WeakSet()) {
 
     if(typeof obj !='object' || obj == null) return obj
@@ -21,6 +21,25 @@ function removeCycles(obj,set = new WeakSet()) {
     }
     return newObj
 }
+// Inplace
+
+// function removeCycles(obj, set = new WeakSet()) {
+//     if (typeof obj !== 'object' || obj === null) return obj;
+
+//     if (set.has(obj)) {
+//         return "null"; // Replace cycles with "null"
+//     }
+
+//     set.add(obj);
+
+//     for (let key in obj) {
+//         if (typeof obj[key] === 'object') {
+//             obj[key] = removeCycles(obj[key], set);
+//         }
+//     }
+    
+//     return obj;
+// }
 
 const obj = {
     name: "A",

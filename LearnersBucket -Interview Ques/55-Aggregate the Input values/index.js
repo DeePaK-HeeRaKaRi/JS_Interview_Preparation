@@ -26,7 +26,8 @@
 // }
 // console.log(aggregrateValues('parent'))
 
- const parentElement = document.querySelector(`#parent`);
+ const parentElement = document?.querySelector('#parent');
+ console.log({parentElement})
 //  const elements = parentElement.querySelectorAll("input[type=text]");
 const elements = parentElement.children
 //  console.log('----elements',elements)

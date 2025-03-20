@@ -25,14 +25,17 @@ class Graph {
       for (const key of this.adjacencyList.keys()) {
         indegree.set(key, 0);
       }
+
+      
+      console.log('---AdjacencyList',this.adjacencyList)
   
       // Calculate indegree
       for (const values of this.adjacencyList.values()) {
         for (const node of values) {
-          indegree.set(node, indegree.get(node) + 1);
+          indegree.set(node,(indegree.get(node) || 0) + 1);
         }
       }
-  
+      console.log('---Indegree',indegree.entries())
       // Add nodes with 0 indegree to the queue
       for (const [node, degree] of indegree.entries()) {
         if (degree === 0) {
