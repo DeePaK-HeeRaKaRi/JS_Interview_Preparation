@@ -19,7 +19,7 @@ var removeDuplicateLetters = function(s) {
 
     let st = []
     for(let i of s) {
-        console.log(vis_hm,freq_hm,st)
+        console.log(vis_hm,freq_hm,st,i)
         if(vis_hm[i]){
             freq_hm[i]--
         }
@@ -39,6 +39,8 @@ var removeDuplicateLetters = function(s) {
         }
     }
     console.log(st)
+
+    console.log('a' < 'b' , 'b' < 'a')
     return st.join('')
 };
 
