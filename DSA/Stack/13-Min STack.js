@@ -26,7 +26,14 @@ MinStack.prototype.push = function(val) {
 };
 
 /**
- * @return {void}
+ 10 < 12
+ val < min
+ val - min < 0
+ val+val - min < val
+ 2val - min < val
+
+ 2val - min = newval
+ min = 2val - newVal[top]
  */
 MinStack.prototype.pop = function() {
     // while poping , need to update the prevmin as well
