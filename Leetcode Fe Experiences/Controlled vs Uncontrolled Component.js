@@ -1,7 +1,8 @@
 /*
 
 Controlled Component
-A controlled component is a component where React fully controls the form element’s state. The form input's value is bound to a state variable, and changes are handled via React.
+A controlled component is a component where React fully controls the form element’s state. 
+The form input's value is bound to a state variable, and changes are handled via React.
 
 Characteristics:
 The input's value is controlled by the React state.

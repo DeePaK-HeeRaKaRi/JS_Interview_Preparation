@@ -20,10 +20,10 @@ let test = {
   a: {
     b: (a, b, c) => {
         console.log('hii',a,b,c,a+b+c)
-        return a + b + c},
-    c: (a, b, c) => a + b - c,
+        return a + b + c}, // 3
+    c: (a, b, c) => a + b - c, // 1
   },
-  d: (a, b, c) => a - b - c,
+  d: (a, b, c) => a - b - c, // -1 
   e: 1,
   f: true,
 };

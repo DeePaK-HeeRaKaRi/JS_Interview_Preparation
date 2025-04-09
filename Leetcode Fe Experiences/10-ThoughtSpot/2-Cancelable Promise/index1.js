@@ -11,7 +11,7 @@ Promise.cancelable = (promise) => {
           .catch((err) => reject(err))
           .finally(() => {
             signal.removeEventListener('abort', onAbort); // Correct way to remove listener
-        });
+          });
 
           signal.addEventListener('abort',onAbort)
       })

@@ -29,7 +29,7 @@ function classNames(...args) {
 }
 
 const obj = new Map()
-obj.cool = '!'
+obj.cool = true
 
 // classNames({BFE: [], dev: true, is: 3},obj) 
 // 'BFE dev is cool'

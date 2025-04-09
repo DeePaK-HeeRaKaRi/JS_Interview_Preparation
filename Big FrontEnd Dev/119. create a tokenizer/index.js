@@ -41,7 +41,8 @@ function* tokenize(str) {
     // console.log(tokens)
     let curr =''
     for(let i of tokens) {
-         if(numbers.includes(i)) {
+        console.log({curr},i)
+        if(numbers.includes(i)) {
             curr += i
         }else {
             if(curr!=''){
@@ -50,6 +51,7 @@ function* tokenize(str) {
             yield i
             curr = ''
         }
+     
     }
     if(curr!=''){
         yield  curr
@@ -57,10 +59,14 @@ function* tokenize(str) {
 }
 
 const tokens = tokenize('1 * ((20 + 300) - 4) / ((100 / 6))')
-
+// let token = tokens.next()
+// console.log({token})
+// token = tokens.next()
+// console.log({token})
 
 while (true) {
   let token = tokens.next()
+  console.log({token})
   if (token.done) {
     break
   }

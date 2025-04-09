@@ -53,18 +53,22 @@ const curry = (fn) => {
         const inner = (...currArgs) => {
             console.log('--curr',currArgs)
             let combinedArgs = [...prev];
+            // console.log({combinedArgs})
             let i = 0;
 
             // Replace placeholders in combinedArgs with values from currArgs
             while (i < combinedArgs.length && currArgs.length > 0) {
+                console.log('==========',combinedArgs[i],curry.placeholder)
                 if (combinedArgs[i] === curry.placeholder) {
                     combinedArgs[i] = currArgs.shift();
+                    console.log({i},combinedArgs[i],combinedArgs)
+
                 }
                 i++;
             }
-
+            
             combinedArgs = [...combinedArgs, ...currArgs];
-
+            console.log('---------------combined args1',combinedArgs)
             if (combinedArgs.length >= fn.length) {
                 const finalArgs = combinedArgs.slice(0, fn.length);
                 if (finalArgs.every((item) => item !== curry.placeholder)) {

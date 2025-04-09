@@ -6,7 +6,7 @@ function helper(obj,path,value) {
     if(rest.length > 0) {
         //set(obj,'test[0]','deepak')
         //{a:'test',b:'b1'}  > set (obj,b[0],'deepak')
-        
+        // a-b 
         if(!obj[current] || typeof obj[current] !== 'object') {  
             const isNumber = !isNaN(Number(rest[0]))
             const nextVal = isNumber ? [] : {}

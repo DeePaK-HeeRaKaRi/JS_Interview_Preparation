@@ -72,8 +72,8 @@ const t8 = async () => { console.log('t8 started'); await delay(4500); console.l
 ex.push(t1);  // Starts immediately
 ex.push(t2);  // Starts immediately
 ex.push(t3);  // Starts immediately
-await ex.push(t4);  // Waits until at least one task finishes , executes after t2 is done
-await ex.push(t5);  // Waits until another task finishes , executes after t3 is done
+ ex.push(t4);  // Waits until at least one task finishes , executes after t2 is done
+ ex.push(t5);  // Waits until another task finishes , executes after t3 is done
 ex.push(t6);  // Waits until another task finishes , executes after t4 is done
 ex.push(t7); // Waits until another task finishes , executes after t1 is done
 ex.push(t8); // Waits until another task finishes , executes after t3 is done
