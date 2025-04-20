@@ -33,7 +33,6 @@ const circuitBreaker = (fn, failureCount, delay) => {
 // test function
 const testFunction = () => {
   let count = 0;
-
   return function () {
     count++;
     if (count < 4) {
@@ -52,7 +51,6 @@ c();
 
 c();
 c();
-
 // Now try after 3000ms 
 setTimeout(() => {
   console.log(c());

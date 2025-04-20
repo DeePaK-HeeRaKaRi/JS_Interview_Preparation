@@ -7,8 +7,6 @@ const generateKey=(path,config) => {
 
     return path+key
 }
-// console.log(generateKey('https://jsonplaceholder.typicode.com/todos/1', {}))
-
 const makeApiCall = async(path,config)=>{
     try{
         let response=await fetch(path,config)
@@ -26,9 +24,7 @@ const cachedApiCall=(timer) =>{
         const key = JSON.stringify(path)
         // const key = generateKey(path,config)
         let entry = cache[key]
-        
         if(!entry || Date.now() > entry.expiryTime) {
-            
             try {
                 const value=await makeApiCall(path,config)
                 console.log("Making New ApiCall");
@@ -44,13 +40,11 @@ const cachedApiCall=(timer) =>{
     }
     return result
 }
-
 const call=cachedApiCall(1400)
 call('https://jsonplaceholder.typicode.com/todos/1',{})
 .then((a)=>{
     console.log(a)
 })
-
 
 setTimeout(() => {
     call("https://jsonplaceholder.typicode.com/todos/1", {})
