@@ -135,3 +135,8 @@ k = 4
 // words = ["i","love","leetcode","i","love","coding"]
 // k = 3
 console.log(topKFrequent(words,k))
+
+/*
+Min-Heap	O(n + m log k)	O(m + k)
+
+*/
