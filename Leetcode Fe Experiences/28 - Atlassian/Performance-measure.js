@@ -76,18 +76,44 @@ measurePerformance(asyncFunction, {
         warmUp: true
     }
 )
+
 //Normal Function
-const syncFunction = () => {
+const syncFunction = (count = 1000000) => {
     let sum = 0
-    for(let i=0; i< 1000000; i++) {
+    for(let i=0; i< count; i++) {
         sum += i
     }
     return sum
 }
 
 
-measurePerformance(asyncFunction, {   
+measurePerformance(syncFunction, {   
         name: 'Sync Function', 
+        iterations: 5, 
+        warmUp: true
+    }
+)
+
+// Memoized function
+
+const memo = (fn) => {
+    let cache = {}
+    return (...args) => {
+        const KEY = JSON.stringify(args)
+        if(cache[KEY]) {
+            return cache[KEY]
+        }
+        
+        const result = fn(...args)
+        cache[KEY] = result
+        return result 
+    }
+}
+
+const memoizedFunction = memo(syncFunction)
+
+measurePerformance(memoizedFunction, {   
+        name: 'Memoized Sync Function', 
         iterations: 5, 
         warmUp: true
     }
