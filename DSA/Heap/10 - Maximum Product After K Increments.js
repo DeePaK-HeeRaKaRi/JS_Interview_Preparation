@@ -16,7 +16,7 @@ class MinHeap{
         }
     }
 
-    push(val){
+    heap_push(val){
         this.heap.push(val);
         this.heapifyUp()
     }
@@ -43,7 +43,7 @@ class MinHeap{
         }
     }
 
-    pop(){
+    heap_pop(){
         if(this.heap.length == 1) {
             return this.heap.pop()
         }
@@ -57,29 +57,46 @@ class MinHeap{
         return this.heap
     }
 
-    peak() {
+    peek() {
         return this.heap.length > 0 ? this.heap[0] : null
     }
+
+     size() {
+        return this.heap.length
+    }
 }
-var findKthLargest = function(nums, k) {
-    let n = nums.length
-    let minHeap = new MinHeap()
-    for(let i=0;i<k; i++) {
-        minHeap.push(nums[i])
+
+var maximumProduct = function(nums, k) {
+    
+    let heap = new MinHeap()
+    let result = 1
+    const mod = Math.pow(10,9) + 7
+    //O(n log n)
+    for(let i of nums) {
+        heap.heap_push(i)
+    }
+    // Check for count & k > if arr.length < k  then we need to pop, increment and push to heap
+
+    //k × (log n + log n) = O(k log n)
+    while(k > 0) {
+        let curr = heap.heap_pop() + 1
+        heap.heap_push(curr)
+        k--
+    }
+    // O(n log n)
+    while(heap.size() > 0) {
+        
+        result = (result * heap.heap_pop()) %  mod
     }
 
-    for(let i=k; i< n; i++) {
-        if(nums[i] > minHeap.peak()) {
-            minHeap.pop()
-            minHeap.push(nums[i])
-        }
-    }
+    return result % mod
 
-    return minHeap.peak()
+    /*
+      TC -   O((n + k) log n) , SC - O(n)
+    */
 };
 
-// TC - O(klogk)+O((n−k)logk)=O(nlogk) , sc (k)
-
-let nums = [3,2,1,5,6,4]
-let k = 2
-console.log(findKthLargest(nums, k) )
+let nums = [0,4]
+let k = 5
+ nums = [6,3,3,2], k = 2
+console.log(maximumProduct(nums,k))

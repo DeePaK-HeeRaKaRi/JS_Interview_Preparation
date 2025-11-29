@@ -1,4 +1,4 @@
-class MinHeap{
+class MaxHeap{
     constructor() {
         this.heap = [];
     }
@@ -7,7 +7,7 @@ class MinHeap{
         let currentIndex = this.heap.length - 1;
         while(currentIndex > 0){
             let parentIndex = Math.floor((currentIndex-1)/2)
-            if(this.heap[parentIndex] > this.heap[currentIndex]) {
+            if(this.heap[parentIndex] < this.heap[currentIndex]) {
                 [this.heap[parentIndex],this.heap[currentIndex]] = [this.heap[currentIndex] , this.heap[parentIndex]]
                 currentIndex = parentIndex
             } else {
@@ -16,7 +16,7 @@ class MinHeap{
         }
     }
 
-    push(val){
+    heap_push(val){
         this.heap.push(val);
         this.heapifyUp()
     }
@@ -27,10 +27,10 @@ class MinHeap{
         let rightIndex = 2 * currentIndex + 2
         while (leftIndex < this.heap.length) {
             let temp = currentIndex
-            if(this.heap[temp] > this.heap[leftIndex]) {
+            if(this.heap[temp] < this.heap[leftIndex]) {
                 temp = leftIndex
             }
-            if(rightIndex < this.heap.length  && this.heap[temp] > this.heap[rightIndex]) {
+            if(rightIndex < this.heap.length  && this.heap[temp] < this.heap[rightIndex]) {
                 temp = rightIndex
             }
             if(temp == currentIndex ){
@@ -43,7 +43,7 @@ class MinHeap{
         }
     }
 
-    pop(){
+    heap_pop(){
         if(this.heap.length == 1) {
             return this.heap.pop()
         }
@@ -53,33 +53,45 @@ class MinHeap{
         return result;
     }
 
-    printHeap(){
+    print_heap(){
         return this.heap
     }
 
-    peak() {
+    peek() {
         return this.heap.length > 0 ? this.heap[0] : null
     }
-}
-var findKthLargest = function(nums, k) {
-    let n = nums.length
-    let minHeap = new MinHeap()
-    for(let i=0;i<k; i++) {
-        minHeap.push(nums[i])
-    }
 
-    for(let i=k; i< n; i++) {
-        if(nums[i] > minHeap.peak()) {
-            minHeap.pop()
-            minHeap.push(nums[i])
+    size() {
+        return this.heap.length
+    }
+}
+
+
+var largestInteger = function(num) {
+    let str = String(num)
+    let even_heap = new MaxHeap()
+    let odd_heap = new MaxHeap()
+    for(let i of str) {
+        let n = Number(i)
+        if(n % 2 == 0) {
+            even_heap.heap_push(n)
+        }
+        else {
+            odd_heap.heap_push(n)
         }
     }
+    // Only two swaps & the it should be both odd or both even
+    let result = 0
+    for(let i of str) {
+       let n = Number(i)
+       let d = (n % 2 == 0) ? even_heap.heap_pop() : odd_heap.heap_pop()
+       result = result * 10 + d
+    }
+    return result
 
-    return minHeap.peak()
 };
 
-// TC - O(klogk)+O((n−k)logk)=O(nlogk) , sc (k)
 
-let nums = [3,2,1,5,6,4]
-let k = 2
-console.log(findKthLargest(nums, k) )
+let num = 65875
+// num = 1234
+console.log(largestInteger(num))

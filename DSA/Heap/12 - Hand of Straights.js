@@ -16,7 +16,7 @@ class MinHeap{
         }
     }
 
-    push(val){
+    heap_push(val){
         this.heap.push(val);
         this.heapifyUp()
     }
@@ -43,7 +43,7 @@ class MinHeap{
         }
     }
 
-    pop(){
+    heap_pop(){
         if(this.heap.length == 1) {
             return this.heap.pop()
         }
@@ -57,29 +57,58 @@ class MinHeap{
         return this.heap
     }
 
-    peak() {
+    peek() {
         return this.heap.length > 0 ? this.heap[0] : null
     }
-}
-var findKthLargest = function(nums, k) {
-    let n = nums.length
-    let minHeap = new MinHeap()
-    for(let i=0;i<k; i++) {
-        minHeap.push(nums[i])
-    }
 
-    for(let i=k; i< n; i++) {
-        if(nums[i] > minHeap.peak()) {
-            minHeap.pop()
-            minHeap.push(nums[i])
+     size() {
+        return this.heap.length
+    }
+}
+
+var isNStraightHand = function(hand, groupSize) {
+    let n = hand.length
+    if( n % groupSize ) return false
+    let heap = new MinHeap() 
+    let hash_map = new Map()
+    for(let i of hand) {
+        if(hash_map.has(i)) {
+            hash_map.set(i, hash_map.get(i) + 1)
+        }
+        else {
+            heap.heap_push(i)
+            hash_map.set(i, 1)
         }
     }
+    // For each group first get the min value from heap
+    // Iterate untill group size with the peek element
+    // if not found in hash map return false
+    // Decrement in hashmap, if it becomes 0 and if current element & peek !=0 return false
 
-    return minHeap.peak()
+    while(heap.size()) {
+        let min_element = heap.peek()
+        for(let i=min_element; i<min_element + groupSize; i++) {
+            if(!hash_map.has(i)) {
+                return false
+            } 
+            hash_map.set(i, hash_map.get(i) - 1)
+            if(hash_map.get(i) == 0) {
+                if(i != heap.peek()) {  /*[1,1,3,6,2,3,4,7,8] gs = 3  // The group will not form next time*/
+                    return false
+                }
+                heap.heap_pop()
+                hash_map.delete(i)
+            }
+        }
+    }
+    return true
+  
+   
 };
 
-// TC - O(klogk)+O((n−k)logk)=O(nlogk) , sc (k)
+let hand = [1,2,3,6,2,3,4,7,8]
+let groupSize = 3
 
-let nums = [3,2,1,5,6,4]
-let k = 2
-console.log(findKthLargest(nums, k) )
+hand = [1,1,3,6,2,3,4,7,8]
+groupSize = 3
+console.log(isNStraightHand(hand,groupSize))

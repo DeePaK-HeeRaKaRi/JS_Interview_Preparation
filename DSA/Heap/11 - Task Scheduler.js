@@ -1,4 +1,4 @@
-class MinHeap{
+class MaxHeap{
     constructor() {
         this.heap = [];
     }
@@ -7,7 +7,7 @@ class MinHeap{
         let currentIndex = this.heap.length - 1;
         while(currentIndex > 0){
             let parentIndex = Math.floor((currentIndex-1)/2)
-            if(this.heap[parentIndex] > this.heap[currentIndex]) {
+            if(this.heap[parentIndex] < this.heap[currentIndex]) {
                 [this.heap[parentIndex],this.heap[currentIndex]] = [this.heap[currentIndex] , this.heap[parentIndex]]
                 currentIndex = parentIndex
             } else {
@@ -27,10 +27,10 @@ class MinHeap{
         let rightIndex = 2 * currentIndex + 2
         while (leftIndex < this.heap.length) {
             let temp = currentIndex
-            if(this.heap[temp] > this.heap[leftIndex]) {
+            if(this.heap[temp] < this.heap[leftIndex]) {
                 temp = leftIndex
             }
-            if(rightIndex < this.heap.length  && this.heap[temp] > this.heap[rightIndex]) {
+            if(rightIndex < this.heap.length  && this.heap[temp] < this.heap[rightIndex]) {
                 temp = rightIndex
             }
             if(temp == currentIndex ){
@@ -52,34 +52,50 @@ class MinHeap{
         this.heapifyDown();
         return result;
     }
-
+    size() {
+        return this.heap.length
+    }
     printHeap(){
         return this.heap
     }
-
-    peak() {
-        return this.heap.length > 0 ? this.heap[0] : null
-    }
 }
-var findKthLargest = function(nums, k) {
-    let n = nums.length
-    let minHeap = new MinHeap()
-    for(let i=0;i<k; i++) {
-        minHeap.push(nums[i])
-    }
-
-    for(let i=k; i< n; i++) {
-        if(nums[i] > minHeap.peak()) {
-            minHeap.pop()
-            minHeap.push(nums[i])
+ 
+function taskScheduler(tasks,n) {
+    if(n==0) return tasks.length
+    let tasksCount = {}
+    tasks.forEach((val,i)=>{
+        if(!tasksCount[val]){
+            tasksCount[val] = 1
         }
+        else{
+            tasksCount[val] += 1
+        }
+    })
+    console.log(Object.values(tasksCount))
+    let maxHeap = new MaxHeap()
+    Object.values(tasksCount).forEach((val,i) => {
+        maxHeap.push(val)
+    })
+    let queue = []
+    let time = 0
+    while(maxHeap.size() > 0 || queue.length > 0){
+        time+=1
+        if(maxHeap.size() > 0) {
+            let currTaskCount = maxHeap.pop()
+            let availableAt = time+n //index
+            if(currTaskCount - 1 > 0){
+                queue.push([currTaskCount-1,availableAt]) /*[taskcount,available] > from that available index the task should repeat taskcount times  */
+            }
+        }
+        
+        if(queue.length > 0 && queue[0][1]==time) {
+            const cur = queue.shift()
+            maxHeap.push(cur[0])
+        }
+          
     }
-
-    return minHeap.peak()
-};
-
-// TC - O(klogk)+O((n−k)logk)=O(nlogk) , sc (k)
-
-let nums = [3,2,1,5,6,4]
-let k = 2
-console.log(findKthLargest(nums, k) )
+    return time
+}
+const tasks = ["A","A","A","B","B","B"]
+const n = 3
+console.log(taskScheduler(tasks,n))
