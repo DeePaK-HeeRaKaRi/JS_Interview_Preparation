@@ -4,8 +4,7 @@
 
 
 
-let mapSeries = (arr, fn) => {
-  return new Promise(async(resolve, reject) => {
+let mapSeries = async (arr, fn) => {
       let results = [];
       for (let item of arr) {
           try {
@@ -19,15 +18,13 @@ let mapSeries = (arr, fn) => {
                   });
               });
               console.log('--------result',result)
-              results.push(result);
+              results.push(result);  
           } catch (error) {
-              return reject(error);
+              throw new Error(error)
           }
       }
-      resolve(results);
-      // return results
-  });
-};
+      return results
+}
 
 
 let result = mapSeries([1, 2, 3, 6, 4, 5], function(num, callback) {
@@ -49,3 +46,19 @@ result
   .catch((err) => {
       console.log('Error -> ', err);
   });
+
+
+/*
+Loop starts
+→ setTimeout registered (Timers API)
+→ await pauses async function
+→ timer expires
+→ callback enters Macrotask Queue
+→ Event Loop pushes callback to Call Stack
+→ resolve() schedules Microtask
+→ callback finishes
+→ Microtask Queue drains
+→ async function resumes
+
+Event loop always executes ALL microtasks before the next macrotask
+*/

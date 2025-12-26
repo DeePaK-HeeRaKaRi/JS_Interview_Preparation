@@ -56,6 +56,8 @@ var minWindow = function(str, target) {
 
 let s = "ADOBECODEBANC"
 let t = "ABC"
-s = 'A'
-t ='AA'
+// s = 'A'
+// t ='AA'
+// s='AABC'
+// t = 'AAABC'
 console.log(minWindow(s,t))

@@ -39,7 +39,7 @@ var numberOfSubstrings2 = (s) => {
             b=r
         }
         else {
-            c = r
+            c = r  
         }
 
         if(a!=-1 && b!=-1 && c!=-1) {  //aaabc, abcabc

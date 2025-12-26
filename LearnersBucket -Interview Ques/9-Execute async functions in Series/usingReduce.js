@@ -29,6 +29,11 @@ const asyncTask = (i) => {
     })
 }
 
+/*
+prevPromise.then(() => curr()) — wait for the previous promise to resolve, 
+then call the current task (starting its promise),
+*/
+
 const asyncSeriesExecuter = (promises) => {
     promises.reduce((prevPromise,currPromise) => {
         return prevPromise
@@ -56,3 +61,4 @@ const tasks = [
 ];
 
 asyncSeriesExecuter(tasks);
+ 

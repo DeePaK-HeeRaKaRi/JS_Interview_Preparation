@@ -41,6 +41,15 @@ Promise.resolve("Success")
   Cleanup
 Success
 
+Before I continue, let me clean up — and I’ll wait if the cleanup is async.
+Promise.resolve("OK")
+  .finally(async () => {
+    console.log("cleanup start");
+    await new Promise(res => setTimeout(res, 2000));
+    console.log("cleanup done");
+  })
+  .then(console.log);
 
+  so need to wrap inside the callback
     */
   

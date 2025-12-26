@@ -12,49 +12,74 @@ Array.prototype.chop=function(size){
     }
     return output
 }
-const mapLimit=((arr,limit,fn)=>{
-    const mapLimitOutput = new Promise((resolve,reject) => {
-        let choppedArr = arr.chop(limit)
-        console.log('choppedArr',choppedArr)
-        let batches=0
-        let chopp=[]
-        const final=choppedArr.reduce((prev,cur) => {
-            // prev.then ensures that the next item is processed only after the previous one is complete.
-            return prev.then((val)=>{
-                const subArrayResult = new Promise((resolve,reject) => {
-                    const results=[]
-                    let taskCompleted=0
-                    cur.forEach((e)=>{
-                        fn(e,(error,resp) => {
-                            if(error){
-                                reject(`failed at ${e}`)
-                            }else{
-                                taskCompleted++
-                                results.push(resp)
-                                if(taskCompleted>=cur.length){
-                                    console.log('baches',batches++)
-                                    chopp.push(results)
-                                    // resolve([...val,...results])
-                                    resolve(chopp)
-                                }
-                            }
-                        })
-                    })
-                })
-                return subArrayResult
-            })
-        },Promise.resolve([]))
-        final
-        .then((result) => {
-            resolve(result);
-        })
-        .catch((e) => {
-            reject(e);
-        })
-    })
-    return mapLimitOutput    
-})
+// const mapLimit=((arr,limit,fn)=>{
+//     const mapLimitOutput = new Promise((resolve,reject) => {
+//         let choppedArr = arr.chop(limit)
+//         console.log('choppedArr',choppedArr)
+//         let batches=0
+//         let chopp=[]
+//         const final=choppedArr.reduce((prev,cur) => {
+//             // prev.then ensures that the next item is processed only after the previous one is complete.
+//             return prev.then((val)=>{
+//                 const subArrayResult = new Promise((resolve,reject) => {
+//                     const results=[]
+//                     let taskCompleted=0
+//                     cur.forEach((e)=>{
+//                         fn(e,(error,resp) => {
+//                             if(error){
+//                                 reject(`failed at ${e}`)
+//                             }else{
+//                                 taskCompleted++
+//                                 results.push(resp)
+//                                 if(taskCompleted>=cur.length){
+//                                     console.log('baches',batches++)
+//                                     chopp.push(results)
+//                                     // resolve([...val,...results])
+//                                     resolve(chopp)
+//                                 }
+//                             }
+//                         })
+//                     })
+//                 })
+//                 return subArrayResult
+//             })
+//         },Promise.resolve([]))
+//         final
+//         .then((result) => {
+//             resolve(result);
+//         })
+//         .catch((e) => {
+//             reject(e);
+//         })
+//     })
+//     return mapLimitOutput    
+// })
 
+const promisify = (fn,item) => {
+   return new Promise((resolve,reject) => {
+        fn(item,(error,value) => error ? reject(`Rejected at ${item}`) : resolve(value))
+   }) 
+}
+
+const mapLimit =async(arr,limit,fn) => {
+    let results = new Array(arr.length)
+    let index = 0
+    while(index < arr.length) {
+        let batch = arr.slice(index,index+limit)
+        const batch_results = await Promise.all(
+            batch.map((item,i) => {
+                return promisify(fn,item)
+                .then((res) => results[index + i] = res)
+                .catch(err => err) 
+                /* Continue processing even if some items fail, else remove the catch block from here
+                
+                The Promise.all will reject it automatically*/
+            })
+        )
+        index+=limit
+    }
+    return results
+}
 const mapLimit_with_Cache = (arr, limit, fn) => {
     const cache = {}; // Initialize the cache object
 
@@ -115,12 +140,11 @@ const mapLimit_with_Cache = (arr, limit, fn) => {
     return mapLimitOutput;
 };
 
-// const arr=[1,2,3,4,5,6,7,8]
 const arr = [1, 2, 3, 4, 5, 6, 7, 8];
-// console.log(arr.chop(3))
 let limit=3
-// const numPromise=mapLimit(arr,limit,function(num,callback){
-const numPromise=mapLimit_with_Cache(arr,limit,function(num,callback){
+
+const numPromise=mapLimit(arr,limit,function(num,callback){
+// const numPromise=mapLimit_with_Cache(arr,limit,function(num,callback){
     setTimeout(()=>{
         num=num*2
         console.log(num)
@@ -144,3 +168,20 @@ numPromise
 .finally(()=>{
     console.log('Map limit is completed')
 })
+
+/*
+Rule to remember (very important)
+
+async/await ❌ does not automatically mean parallel
+await inside a loop → sequential
+await Promise.all(...) → parallel
+
+---------------------------------------------
+
+
+All setTimeouts scheduled (parallel)
+→ macrotasks resolve
+→ microtasks (Promise.all)
+→ await resumes once
+→ final filtered result
+*/
