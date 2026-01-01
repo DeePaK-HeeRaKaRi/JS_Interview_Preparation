@@ -1,3 +1,4 @@
+//Leetcode 2958
 var maxSubarrayLength = function(nums, k) {
     let l = 0
     let r = 0
@@ -9,11 +10,7 @@ var maxSubarrayLength = function(nums, k) {
         }else{
             hm[nums[r]] = 1
         }
-        if(hm[nums[r]] > k) {
-            while(nums[l]!=nums[r]) {  //1 4 4 4 3 output 2
-                hm[nums[l]]--
-                l++
-            }
+        while(hm[nums[r]] > k) {
             hm[nums[l]]--
             l++
         }

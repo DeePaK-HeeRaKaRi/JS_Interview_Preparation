@@ -1,3 +1,4 @@
+//leetcode 978
 var maxTurbulenceSize = function(arr) {
     if(arr.length == 1) return 1
     let l = 0
@@ -30,6 +31,6 @@ var maxTurbulenceSize = function(arr) {
 };
 
 let arr = [9,4,2,10,7,8,8,1,9]
-arr = [4,8,12,16]
-arr = [0,1,1,0,1,0,1,1,0,0]
+// arr = [4,8,12,16]
+// arr = [0,1,1,0,1,0,1,1,0,0]
 console.log(maxTurbulenceSize(arr))

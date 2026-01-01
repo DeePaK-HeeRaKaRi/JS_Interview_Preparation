@@ -1,4 +1,5 @@
-// Same as Continous Subarrays
+// Same as Continous Subarrays 
+//1438
 
 var longestSubarray = function(nums,limit) {
     let maxQ = []
@@ -10,10 +11,10 @@ var longestSubarray = function(nums,limit) {
         while(maxQ.length > 0 && nums[r] > maxQ[maxQ.length-1]) {
             maxQ.pop()
         }
+        maxQ.push(nums[r])
         while(minQ.length > 0 && nums[r] < minQ[minQ.length-1]) {
             minQ.pop()
         }
-        maxQ.push(nums[r])
         minQ.push(nums[r])
         while((maxQ[0] - minQ[0]) > limit) {
             if(nums[l] == maxQ[0]) {
