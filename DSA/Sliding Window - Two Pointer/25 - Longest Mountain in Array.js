@@ -1,5 +1,4 @@
-// node './Two Pointers - Longest Mountain in Array.js'
-
+// 845
 // var longestMountain = function(arr) {
 //     let n = arr.length
 //     let left = new Array(n).fill(0)
@@ -33,29 +32,35 @@
 
 var longestMountain = function(arr) {
     let n = arr.length
-    let i=1
+    let left_dist = 0 
+    let right_dist = 0
+    let i = 1
     let ans = 0
-    let left = 0
-    let right = 0
-    while(i<n) {
-        left=0
-        while(arr[i-1]<arr[i]) {
-            left+=1
+    while(i < n) {
+        left_dist = 0
+        while(arr[i-1] < arr[i]) {
             i++
+            left_dist++
         }
-        if(left){ // [2,1,4,7,3,2,5] assume now the current index is 4, where the above condition fails,  so we need to travers from previous index
-            i-=1
+        /*
+            arr = [2,1,4,7,3,2,5] at index = 4(7) left = 3 
+            Now whenever we are counting for right we need to include the last element
+        */
+        if(left_dist) { 
+            i--
         }
-        right=0
-        while(i+1<n && arr[i]>arr[i+1]){
-            right+=1
+
+        right_dist = 0
+        while(i<n && arr[i] > arr[i+1]) {
             i++
+            right_dist++
         }
-        console.log(left,right)
-        if(left && right){
-            ans = Math.max(ans,left+right+1)
+
+        if(left_dist && right_dist) {
+            ans = Math.max(ans, left_dist+right_dist+1)
         }
-        if(left==0 || right==0){  //[2,2,2] we need to increase i
+
+        if(left_dist == 0 || right_dist == 0) {
             i++
         }
     }

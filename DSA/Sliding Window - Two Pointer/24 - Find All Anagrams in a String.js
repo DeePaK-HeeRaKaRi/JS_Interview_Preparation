@@ -9,7 +9,7 @@ var findAnagrams = function(s, p) {
         }
         else {
             hm_p[i] = 1
-        }
+        }  
     }
     let hm_s = {}
     while(r < s.length) {
@@ -28,10 +28,12 @@ var findAnagrams = function(s, p) {
             }
             // Check if the right element has exceeded with the given p
             if(hm_s[curr] > hm_p[curr]) { //s= "abcabccbbaa" p = "aabbcc"
-                hm_s = {}
-                hm_s[curr] = hm_p[curr]
-                let currDistance = r-l+1
-                l += currDistance - hm_p[curr]
+                  // Shrink the left untill curr count <= allwed
+               while(hm_s[curr] > hm_p[curr]) { // s = "abcabccba" p = "aabbcc"
+                hm_s[s[l]] -= 1
+                if(hm_s[s[l]] == 0) delete hm_s[s[l]]
+                l++
+               }
             }
             if(r - l +1 == p.length) {
                 ans.push(Math.min(l,r))
