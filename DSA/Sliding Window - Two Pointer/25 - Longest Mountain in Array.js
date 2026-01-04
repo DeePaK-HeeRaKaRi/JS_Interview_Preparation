@@ -60,9 +60,10 @@ var longestMountain = function(arr) {
             ans = Math.max(ans, left_dist+right_dist+1)
         }
 
-        if(left_dist == 0 || right_dist == 0) {
-            i++
-        }
+        // if(left_dist == 0 || right_dist == 0) {
+        //     i++
+        // }
+        i++
     }
     return ans
 }
