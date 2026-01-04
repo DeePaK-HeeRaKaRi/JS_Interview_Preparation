@@ -1,3 +1,8 @@
+/*
+This will provide the most priority after executing all the tasks. Not a efficient solution.
+
+*/
+
 const resolvePromisesWithPriority = (promises) => {
   const sortedPromises = promises.sort((a, b) => a.priority - b.priority);
   let inputs = sortedPromises.map((p) => p.task(p.priority))
