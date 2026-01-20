@@ -30,11 +30,8 @@ class QueueCallBacks {
         else {
             if(this.callbacks_queue.length < this.max_callbacks) {
                 this.callbacks_queue.push(callback)
-            }
-            
-            
+            }    
         }
-        
     }
 
     executeNext() {
