@@ -32,8 +32,9 @@ var nextGreaterElement = function(n) {
    
 
    let res = Number(arr.join(''))
-   return res
+   return res > Math.pow(2,31) -1 ? -1 : res
 };
 
 let n = 125431
+n = 2147483486
 console.log(nextGreaterElement(n))

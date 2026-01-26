@@ -31,6 +31,8 @@ var trap2 = function(height) {
     // Do 2 way traversal
     // Math.min(lmax,rmax) >  so get min
     //  tarverse the smaller one
+    // [0,1,0,2,1,0,1,3,2,1,2,1] > when i standing at 6th index i only need l_max - height[i]
+    // Intution we need the smaller one > mn(lmax-rmax) - height[i]
     let n = height.length
     let l=0
     let r = n-1

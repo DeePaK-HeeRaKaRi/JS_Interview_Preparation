@@ -17,6 +17,9 @@ var nextGreaterElements = function(nums) {
     return res
 };
 
+let n=[1,2,3,4,3]
+console.log(nextGreaterElements(n))
+
 /*
 
 Input: nums = [1,2,3,4,3]

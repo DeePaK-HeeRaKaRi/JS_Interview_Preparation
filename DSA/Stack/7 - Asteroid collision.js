@@ -1,4 +1,5 @@
-var asteroidCollision = function(arr) {
+ 
+ var asteroidCollision = function(arr) {
     // [4,7,1,1,2,-3,-7,17,15,-16]
     let stack = []
     for(let i=0;i<arr.length; i++) {
