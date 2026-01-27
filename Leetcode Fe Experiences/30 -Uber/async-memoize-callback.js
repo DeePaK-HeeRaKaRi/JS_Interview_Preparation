@@ -62,6 +62,7 @@ function memoizeCallback(fn, options = {}) {
         return queueMicrotask(() => callback(null, cached.value))
     }
 
+    /*check for any ongoing requests with the same key */
     if(!latestWins && inFlight.has(cacheKey)) {
         inFlight.get(cacheKey).callbacks.push(callback)
         return;
@@ -75,7 +76,6 @@ function memoizeCallback(fn, options = {}) {
     const controller = abort ?  new AbortController() : null
 
     // mark the task as ongoing
-
     inFlight.set(cacheKey, {
         controller,
         callbacks:[callback]
