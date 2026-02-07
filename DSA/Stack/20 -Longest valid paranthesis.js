@@ -1,6 +1,6 @@
 var longestValidParentheses = function(s) {
     let openBrackets = [-1]  //()
-    let maxi = -1
+    let maxi = 0
     for(let i=0;i<s.length; i++) {
         if(s[i] == '(') {
             openBrackets.push(i)
