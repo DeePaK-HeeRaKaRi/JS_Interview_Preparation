@@ -4,13 +4,13 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
 }
 .todo-container{
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-    gap: 20px;
+    gap: 10px;
     height: 90vh;
     overflow-y: scroll;
 }
@@ -22,10 +22,12 @@
     justify-content: center;
     align-items: center;
     border: 1px solid black;
+    overflow-y: scroll;
 }
 .todo-description {
-    white-space: normal;
-    word-break: break-word;
+    white-space: normal; /* multiple spaces into one hello    test > hello test */
+    /* word-break: break-word; */
+    overflow-wrap: break-word;
     max-width: 90%;
 }
 .pagination-container {
