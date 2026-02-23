@@ -35,12 +35,12 @@ function Events() {
         // console.log(`this.subscriptionOnceList`, this.subscriptionOnceList);
         this.subscriptionOnceList.set(name, []);
 
-        // const subscribeOnceAsyncCallbacks =this.subscribeOnceAsyncList.get(name) || [];
-        // subscribeOnceAsyncCallbacks.forEach((e) => {
-        //   e(data);
-        // });
+        const subscribeOnceAsyncCallbacks =this.subscriptionOnceAsyncList.get(name) || [];
+        subscribeOnceAsyncCallbacks.forEach((e) => {
+          e(data);
+        });
 
-        // this.subscribeOnceAsyncList.set(name, []);
+        this.subscriptionOnceAsyncList.set(name, []);
     }
 
     this.publishAll=function(data){
@@ -103,30 +103,36 @@ events.publish("new-user", "Doe");
 events.publish("new-user", "Jhon");
 
 newUserNewsSubscription.remove();
-events.publish("new-user", "Doe");
-// const newUserNewsSubscription3 = events.subscribe(
-//   "new-user1",
-//   function (payload) {
-//     console.log(`Sending Q3 News to: ${payload}`);
-//   }
-// );
-
-events.publishAll('foo')
+events.publish("new-user", "deepak");
+const newUserNewsSubscription3 = events.subscribe(
+  "new-user1",
+  function (payload) {
+    console.log(`Sending Q3 News to: ${payload}`);
+  }
+);
+// events.publishAll('new-user1-all')
+// events.publishAll('test-all')
 
 // newUserNewsSubscription.remove();
 // Upto here simple implementation for pubs sub is done
 
-// // events.publish("new-user", "Foo");
-events.getAllSubscriptionList();
+// events.publish("new-user", "Foo");
+// events.getAllSubscriptionList();
 
 // ------------------------------------------
-// events.subscribeOnce("new-user", function (payload) {
-//   console.log(`I am invoked once ${payload}`);
-// });
 
-// events.publish("new-user", "Foo Once");
-// events.publish("new-user", "Foo Twice");
+console.log('SUBSCRIBE ONCE STARTS')
+events.subscribeOnce("new-user", function (payload) {
+  console.log(`I am invoked once ${payload}`);
+});
 
+events.subscribeOnce("new-user", function (payload) {
+  console.log(`I am invoked once 11 ${payload}`);
+});
+events.publish("new-user", "Foo Once");
+events.publish("new-user", "Foo Twice");
+
+events.publishAll('test-new all events')
 // events.subscribeOnceAsync("new-user").then(function (payload) {
 //   console.log(`I am invoked once ${payload}`);
 // });

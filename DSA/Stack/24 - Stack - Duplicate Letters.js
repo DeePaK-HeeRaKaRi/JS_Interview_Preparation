@@ -20,13 +20,13 @@ var removeDuplicateLetters = function(s) {
     let st = []
     for(let i of s) {
         console.log(vis_hm,freq_hm,st,i)
-        if(vis_hm[i]){
+        if(vis_hm[i]){ /*bcab > index 3(b ) is alreay visited so decrease */
             freq_hm[i]--
         }
         else{
             // i < st[st.length-1] ==> for lexicographical smaller 
             // freq_hm[i] > 0 == > check if it can be removed or not
-            // bca
+            // bcab > ab(wrong) > bca(correct) since the c is not occurng in future we need to stay at there
             while(st.length > 0 && i < st[st.length-1] && freq_hm[st[st.length-1]] > 0) {
                 let t=st.pop()
                 // freq_hm[t]--

@@ -18,17 +18,10 @@ function uncompress(str) {
                 number = 0
             }
         }else if(s == ')') {
-            if(count_stack.length > 0) {
-                let repeatTime = count_stack.pop()
-                console.log('------',str_stack)
-                if(str_stack.length>0) {
-                    let lastStr = str_stack.pop()
-                    curr_str = lastStr + curr_str.repeat(repeatTime)
-                }
-                else {
-                    curr_str = curr_str.repeat(repeatTime)
-                }
-            }
+             
+                let repeatTime = count_stack.pop() 
+                let lastStr = str_stack.pop()
+                curr_str = lastStr + curr_str.repeat(repeatTime)
         }else {
             curr_str += s
         }
