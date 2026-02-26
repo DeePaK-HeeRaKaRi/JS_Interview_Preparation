@@ -1,4 +1,4 @@
-var MinStack = function() {
+ var MinStack = function() {
     this.stack = []
     this.prevmin = Infinity
 };

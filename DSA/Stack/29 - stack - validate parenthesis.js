@@ -1,3 +1,4 @@
+
 function validParenthesis(str){
     let openBrackets = []
     let star = []
