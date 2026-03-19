@@ -23,6 +23,7 @@ const flattenArray=(arr) => {
             // preValue=preValue.concat(flattenArray(curValue))
             preValue=[...preValue,...flattenArray(curValue)]
         }else{
+            
             // console.log('------- prev',preValue.length,preValue,curValue)
             preValue.push(curValue)
         }
