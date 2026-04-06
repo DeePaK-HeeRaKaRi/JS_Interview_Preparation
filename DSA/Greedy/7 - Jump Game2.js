@@ -15,6 +15,7 @@
 
 
 function jump(arr) {
+    
     // Think in terms of range
     let jumps = 0
     let l = 0

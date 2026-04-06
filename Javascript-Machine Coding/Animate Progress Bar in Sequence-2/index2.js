@@ -11,7 +11,7 @@ class ProgressBars {
     addEventListeners() {
         this.button.addEventListener('click', () => this.buildSyncProgressBar())
 
-        // this.button.addEventListener('click', () =>  this.buildAsyncProgressBar())
+        // this.button.addEventListener('click', () => this.buildAsyncProgressBar())
     }
 
     buildAsyncProgressBar() {
@@ -57,7 +57,7 @@ class ProgressBars {
         outer.classList.add('progress-bar-container',`progress-bar-container-${this.count++}`)
 
         const inner = document.createElement('div')
-        inner.classList.add('progressBar',`progressBar-${this.count}`)
+        inner.classList.add('async-progressBar',`async-progressBar-${this.count}`)
         
         // outer.appendChild(inner)
 
@@ -77,8 +77,8 @@ class ProgressBars {
         //     inner.style.transform = 'translateX(0%)'; // Move from -100% to 0%
         // });
 
-        this.animateProgressBar(inner, percentageText, 0);
-        
+        // this.animateProgressBar(inner, percentageText, 0);
+        this.animateProgressBar1(inner, percentageText, 5000);
     }
 
 
@@ -87,10 +87,31 @@ class ProgressBars {
 
         inner.style.transform = `translateX(${progress - 100}%)`;
         percentageText.innerText = `${progress}%`;
-
         setTimeout(() => {
             requestAnimationFrame(() => this.animateProgressBar(inner, percentageText, progress + 1));
         }, 200); // Adjust speed of increment (30ms per step)
+    }
+
+    animateProgressBar1(inner, percentageText, duration = 5000) {
+        let startTime = null;
+
+        const animate = (timestamp) => {
+            if (!startTime) startTime = timestamp;  //performance.now() > to know when animation ws started
+            console.log({timestamp})
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1); // 0 → 1 How much time passed since animation started
+            console.log({progress})
+            const percent = Math.floor(progress * 100);
+
+            inner.style.transform = `translateX(${percent - 100}%)`;
+            percentageText.innerText = `${percent}%`;
+
+            if (progress < 1) { //progress = elapsed / duration
+                requestAnimationFrame(animate);
+            }
+        };
+
+        requestAnimationFrame(animate);  //Call animate() before next repaint and pass current timestamp.   
     }
 }
 
@@ -100,12 +121,21 @@ const addBtn = document.querySelector('.addButton')
 new ProgressBars(progressBarContainer, addBtn)
 
 /*
+requestAnimationFrame runs roughly every 16ms (~60 FPS)
 
 requestAnimationFrame executes the callback right before the next repaint, 
 ensuring smooth animations and efficient updates
 
 requestAnimationFrame helps avoid unnecessary reflows 
 and repaints by batching DOM updates before the next frame render. It ensures smooth animations and better performance.
+| timestamp | startTime | elapsed |
+| --------- | --------- | ------- |
+| 53113     | 53113     | 0       |
+| 53129     | 53113     | 16      |
+| 53146     | 53113     | 33      |
+| 53163     | 53113     | 50      |
+| 53213     | 53113     | 100     |
+| 56100     | 53113     | ~3000   |
 
 */
 

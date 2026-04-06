@@ -1,7 +1,7 @@
     
 
 .progress-bar-container {
-    height: 10px;
+    height: 30px;
     width: 70%;
     border: 1px solid black;
     margin-top: 10px;
@@ -11,11 +11,10 @@
 
 .progressBar {
     background-color: aqua;
-    /* width: 0%; */
     height: 100%;
     transform: translateX(-100%);
     /* transition: width 2s ease; */
-    transition: transform 3s ease;
+    transition: transform 2s ease;
 }   
 
 
@@ -27,4 +26,10 @@
     color: black;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.async-progressBar {
+     background-color: aqua;
+    height: 100%;
+    /* transform: translateX(-100%); */
 }
