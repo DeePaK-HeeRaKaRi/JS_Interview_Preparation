@@ -15,7 +15,8 @@ function jobSequencing(arr) {
             count++
         }
         else{
-            for(let j=getCurrDeadline-1;j>=0;j--) {
+            if(getCurrDeadline-1 == 0) break
+            for(let j=getCurrDeadline-1;j>0;j--) {
                 if(deadlineArr[j] == -1) {
                     deadlineArr[getCurrDeadline] = getJobId
                     maxProfit += getCUrrProfit

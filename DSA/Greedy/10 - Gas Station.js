@@ -11,7 +11,7 @@ var canCompleteCircuit = function(gas, cost) {
     let costSum = cost.reduce((prev,curr) => prev+curr,0)
     if(gasSum < costSum) return -1
     let fuelLeft = 0
-    let curIndex = 0
+    let curIndex = -1
     let flag = true //Flag to change the index position
     for(let i=0;i<gas.length;i++) {
         // if(flag && gas[i]>cost[i]) {
@@ -31,6 +31,7 @@ var canCompleteCircuit = function(gas, cost) {
         // }
     }
     console.log({fuelLeft , curIndex,gasSum,costSum})
+    return curIndex + 1
 };
 var gas = [1,2,3,4,5]
 var cost = [3,4,5,1,2]

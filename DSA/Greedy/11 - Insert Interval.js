@@ -15,8 +15,8 @@ function InsertInterval(intervals,newInterval){
 
     // CHeck the startTime and endTime of newInterval .Then Take min and max of those intervals
     while(i<n && intervals[i][0] <= newInterval[1]) {
-        mini = Math.min(mini,newInterval[0],intervals[i][0])
-        maxi = Math.max(maxi,newInterval[1],intervals[i][1])
+        mini = Math.min(mini,intervals[i][0])
+        maxi = Math.max(maxi,intervals[i][1])
         i++
     }
     result.push([mini,maxi])
