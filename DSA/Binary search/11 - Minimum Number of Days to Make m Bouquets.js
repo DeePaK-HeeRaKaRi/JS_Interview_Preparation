@@ -1,39 +1,35 @@
 var minDays = function(bloomDay, m, k) {
-    function findPossibleDays(mid) {
-        let total = 0
-        let curr = 0
-        for(let i of bloomDay) {
-            if(mid >= i) {
-                curr += 1
-                if(curr == k) {
-                    total++
-                    curr = 0
+    function isPossibleBouquetsCount(targetDay) {
+        let adjCount = 0
+        let bouquetCount = 0
+        for(let currDay of bloomDay) {
+            if(currDay <= targetDay) {
+                adjCount += 1
+                if(adjCount == k) {
+                    bouquetCount += 1
+                    adjCount = 0
                 }
-            }else {
-                curr = 0
+            }
+            else {
+                adjCount = 0
             }
 
-            if(total >= m) {
-                break
-            }
+            if(bouquetCount >=m ) return true
         }
-        return total
+        return false
     }
-    let totalDays = m * k
-    if(bloomDay.length < totalDays) return -1
 
+    let required_days = m * k
+    if(bloomDay.length < required_days) return -1
     let low = Math.min(...bloomDay)
     let high = Math.max(...bloomDay)
-
-    // if(high < totalDays ) return -1  [1,1,1,1] m=3 k=1
     while(low <= high) {
-        let mid = Math.floor((low + high) / 2)
-        let target = findPossibleDays(mid)
-        if(target < m) {
-            low = mid +1
+        const mid = Math.floor((low+high) / 2)
+        if(isPossibleBouquetsCount(mid)) {
+            high = mid - 1
         }
         else {
-            high = mid -1
+            low = mid + 1
         }
     }
     return low
