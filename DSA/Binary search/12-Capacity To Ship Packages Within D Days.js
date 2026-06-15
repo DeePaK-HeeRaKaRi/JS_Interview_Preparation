@@ -1,6 +1,6 @@
 var shipWithinDays = function(weights, days) {
-    let high = weights.reduce((prev,curr) => prev + curr ,0)
-    let low = Math.max(...weights)
+    let high = weights.reduce((prev,curr) => prev + curr ,0) // max weight of the ship
+    let low = Math.max(...weights) // ship all the packages
 
     function possibleDays(mid) {
         let total_Days = 1

@@ -17,11 +17,12 @@ function kthmissingPositive(arr, k) {
     // [1,2,3,4,5,6,7,8,9,10,11]
     // [1,1,1,3,6]  > 3 > until 7 3 nubers are missing
 
-    let low = 1
-    let high = Math.max(...arr)
+    let low = 0
+    let high = arr.length - 1
     while(low<=high) {
         let mid = Math.floor((low + high) / 2)
         let missingNumbers = arr[mid] - (mid + 1)
+        console.log({mid, 'arr[mid]' : arr[mid],  missingNumbers })
         if(missingNumbers <= k ) {
             low = mid + 1
         }
@@ -36,3 +37,7 @@ function kthmissingPositive(arr, k) {
     //arr[high]+(k-arr[high]-(high+1))
     //arr[high]+k-arr[high]+high+1 > low + k
 }
+
+let arr = [2,3,4,7,11]
+let k = 5
+console.log(kthmissingPositive(arr, k))
