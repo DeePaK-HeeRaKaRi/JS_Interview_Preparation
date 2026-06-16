@@ -36,3 +36,14 @@ let arr = [1,2,4,8,9]
 let cows = 3
 
 console.log(aggressiveCows(arr,cows))
+
+/* 
+why returning high ? 
+
+Since low = possible case and high = not possible case [as per question]
+Here in BS the opposite polarity exists
+so impossible becomes possible & possible becomes impossible
+
+return high
+
+*/
