@@ -52,3 +52,60 @@ console.log(curriedJoin(_, _, _)(1)(_, 3)(2)); // '1_2_3'
 // const curried = curry(join)(1, 2);
 // console.log(curried(3)); // '1_2_3'
 // console.log(curried(4)); // '1_2_4'
+
+/*
+
+Each inner is not the same function execution.
+
+Every time you do
+
+return curried(...combinedArgs);
+
+curried runs again, creating a new closure with a new args.
+=========================================================
+
+curriedJoin(_,_,_)
+        │
+        ▼
++----------------------+
+| inner #1             |
+| args=[_,_,_]         |
++----------------------+
+        │
+        ▼
+      (1)
+        │
+        ▼
+calls curried(1,_,_)
+        │
+        ▼
++----------------------+
+| inner #2             |
+| args=[1,_,_]         |
++----------------------+
+        │
+        ▼
+     (_,3)
+        │
+        ▼
+calls curried(1,3,_)
+        │
+        ▼
++----------------------+
+| inner #3             |
+| args=[1,3,_]         |
++----------------------+
+        │
+        ▼
+       (2)
+        │
+        ▼
+join(1,3,2)
+        │
+        ▼
+     "1_3_2"
+
+
+
+
+*/
