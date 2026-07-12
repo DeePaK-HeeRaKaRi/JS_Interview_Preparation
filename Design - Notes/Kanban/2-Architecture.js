@@ -330,4 +330,42 @@ Draft comments
 
 Sync token
 
+
+-----------------------------------------------------
+Idempotency Key
+
+"What if the create request succeeds on the server but the response is lost?"
+
+For Create Card:
+
+Client
+
+↓
+
+Generate
+
+cardId = uuid
+
+↓
+
+Optimistic UI
+
+↓
+
+POST
+
+cardId
+
+If retry happens
+
+↓
+
+Use the same cardId.
+
+No duplicate.
+
+For create operations, I'd make the request idempotent. The client would generate a stable identifier—either a client-generated entity ID
+ or a dedicated idempotency key—and reuse it across retries. If the request is processed twice due to a network failure, 
+the server recognizes the same key and returns the existing resource instead of creating a duplicate
+
 */
