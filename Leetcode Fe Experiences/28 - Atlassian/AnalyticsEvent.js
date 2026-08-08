@@ -158,7 +158,6 @@ class AnalyticsEvents {
         this.events.push(event);
       }
       console.log("📦 Event Queued:", event);
-        this.autoStartQueued = false;
         if (!this.interval && !this.autoStartQueued) { //Prevents duplicate microtasks being queued
             this.autoStartQueued = true;
             queueMicrotask(() => {
