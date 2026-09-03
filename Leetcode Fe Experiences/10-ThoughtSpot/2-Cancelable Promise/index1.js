@@ -1,11 +1,12 @@
-Promise.cancelable = (promise) => {
+const makeCancelable = (promise) => {
     //code here
-        let controller = new AbortController()
-        let signal = controller.signal
-
-        const onAbort = () => Promise.reject(new Error('Promise has been Aborted'));
+      let controller = new AbortController()
+      let signal = controller.signal
 
       const wrappedPromise = new Promise((resolve,reject) => {
+
+        const onAbort = () => reject(new Error('Promise has been Aborted'));
+
           promise
           .then((value) => resolve(value))
           .catch((err) => reject(err))
@@ -31,8 +32,8 @@ Promise.cancelable = (promise) => {
       resolve("Task 2 completed");
     }, 3000);
   });
-  const cancelableTask1 = Promise.cancelable(asyncTask1);
-  const cancelableTask2 = Promise.cancelable(asyncTask2);
+  const cancelableTask1 = makeCancelable(asyncTask1);
+  const cancelableTask2 = makeCancelable(asyncTask2);
   
   cancelableTask1.wrappedPromise
     .then((result) => console.log(result))

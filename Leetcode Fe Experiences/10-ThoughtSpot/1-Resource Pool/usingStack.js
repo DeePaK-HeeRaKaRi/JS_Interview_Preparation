@@ -6,8 +6,9 @@
 
 
 class ResourcePoolMember{
-    constructor(data) {
+    constructor(data,index) {
         this.data = data;
+        this.index = index
         this.available = true;
     }
 }
@@ -19,7 +20,6 @@ class ResourcePool {
         this.resetFunc = resetFunc
         this.size = size;
         this.pool = []
-        // this.availableResource = []
         this.availableResource = new Set()
         this.intializePool()
     }
@@ -27,9 +27,7 @@ class ResourcePool {
     intializePool(){
         for(let i=0;i<this.size;i++) {
             const resource = this.resetFunc(this.creatorFunc())
-            this.pool.push(new ResourcePoolMember(resource))
-
-            // this.availableResource.push(i)  //Store current Index
+            this.pool.push(new ResourcePoolMember(resource,i))
             this.availableResource.add(i)
         }
     }
@@ -41,9 +39,10 @@ class ResourcePool {
 
     expandPool() {
         const resource = this.resetFunc(this.creatorFunc())
-        this.pool.push(new ResourcePoolMember(resource))
+        const index = this.pool.length
+        this.pool.push(new ResourcePoolMember(resource,index))
         // this.availableResource.push(this.pool.length-1)
-        this.availableResource.add(this.pool.length-1)
+        this.availableResource.add(index)
         return 
     }
 
@@ -57,22 +56,19 @@ class ResourcePool {
         
         // const get_available_resource = this.availableResource.shift()
         console.log('Available Resource',[...this.availableResource])
-        const get_available_resource = [...this.availableResource][0];  // O(1) to get an available resource
-        this.availableResource.delete(get_available_resource);  // O(1) to remove from Set
-        const resource = this.pool[get_available_resource]
+        const get_available_resource_index = this.availableResource.values().next().value  // O(1) to get an available resource
+        this.availableResource.delete(get_available_resource_index)  // O(1) to remove from Set
+        const resource = this.pool[get_available_resource_index]
         resource.available = false
         return resource
     }
 
     releaseElement(resource){
-        const get_resource_index = this.pool.indexOf(resource)
-        const get_resource = this.pool[get_resource_index]
-        get_resource.available = true
-        this.resetFunc(get_resource.data)
-        // this.availableResource.push(get_resource_index)
+       if(resource.available) return // already relased
 
-        this.availableResource.add(get_resource_index)
-        console.log('get_resource----------',get_resource)
+       resource.available = true
+       this.resetFunc(resource.data)
+       this.availableResource.add(resource.index)
     }
 }
 

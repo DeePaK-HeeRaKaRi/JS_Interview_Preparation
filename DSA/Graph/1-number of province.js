@@ -1,51 +1,76 @@
-function bfs(i,vis,adjList) {
-    vis[i] = 1
-    let s = [i]
-    let curr 
-    let head = 0
-    // s.length > 0
-    while( head < s.length) {
-            // curr = s.shift()
-            curr = s[head++]
-            for(let t of adjList.get(curr)) {
-                if(vis[t] == 0) {
-                    s.push(t)
-                    vis[t] = 1
-                }
-            }
+/**
+ * @param {number[][]} isConnected
+ * @return {number}
+ */
+class Queue1 {
+    constructor() {
+        this.elements = {}
+        this.head = 0
+        this.tail = 0
+    }
+
+    enqueue(val) {
+        this.elements[this.tail] = val
+        this.tail++
+    }
+
+    dequeue() {
+        if(this.size() == 0) return null
+        const first_element = this.elements[this.head]
+        delete this.elements[this.head]
+        this.head++
+        return first_element
+    }
+
+    size() {
+        return this.tail - this.head
     }
 }
-
-let V = 3
-let adj = [
-    [1, 0, 1],
-    [0, 1, 0],
-    [1, 0, 1]
-   ]
-let adjList = new Map()
-for(let i=0;i<V;i++) {
-    adjList.set(i,[])
-}
-
-for(let i=0;i<V;i++){
-    for(let j=0;j<V;j++) {
-        if(i!=j && adj[i][j]==1 ){
-            adjList.get(i).push(j)
-            adjList.get(j).push(i)
+function bfs(i,vis,adjList) {
+    vis[i] = 1
+    let queue = new Queue1()
+    queue.enqueue(i)
+    let curr = null
+    while(queue.size() > 0) {
+        curr = queue.dequeue() // get the fisrt element
+        for(let i of adjList.get(curr)) {
+            if(vis[i] == 0) {
+                vis[i] = 1
+                queue.enqueue(i)
+            }
         }
     }
 }
-
-// console.log(adjList)
-let vis = new Array(V).fill(0)
-// console.log(vis)
-let res = 0
-for(let i=0;i<V;i++) {
-    // console.log(i)
-    if(vis[i] == 0) {
-        res++
-        bfs(i,vis,adjList)
+var findCircleNum = function(isConnected) {
+    // Create the adj list 
+    let v = isConnected.length
+    let adjList = new Map()
+    for(let i=0;i<v; i++) {
+        adjList.set(i,[])
     }
-}
 
-console.log(res)
+    // covert the adj matrix to adjlist
+    for(let i=0;i<v;i++) {
+        for(let j=0;j<v;j++) {
+            if(i!=j && isConnected[i][j] == 1) { // bidirectional
+                adjList.get(i).push(j)
+                adjList.get(j).push(i)
+            }
+        }
+    }
+
+    // Visited array
+    let vis = new Array(v).fill(0)
+
+    let res = 0
+    for(let i=0; i<v ;i++) {
+        if(vis[i] == 0) {
+            res++
+            bfs(i,vis,adjList)
+        }
+    }
+
+    return res
+};
+
+//TC o(v+e) sc v**2
